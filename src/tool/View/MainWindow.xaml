@@ -1,0 +1,210 @@
+<Window x:Class="BBSFW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:BBSFW.ViewModel"
+        xmlns:vw="clr-namespace:BBSFW.View"
+        mc:Ignorable="d"
+        Title="BBS-FW Tool"
+        Height="790"
+        Width="1180"
+        MinHeight="700"
+        MinWidth="1020"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackgroundBrush}">
+
+	<Window.Resources>
+		<BooleanToVisibilityConverter x:Key="BoolToVis" />
+	</Window.Resources>
+
+	<Window.DataContext>
+		<vm:MainViewModel />
+	</Window.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Border Grid.Row="0"
+				Background="{DynamicResource HeaderGradientBrush}"
+				BorderBrush="{DynamicResource HeaderStrokeBrush}"
+				BorderThickness="0 0 0 1"
+				Padding="28 22">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+					<Border Width="52"
+							Height="52"
+							CornerRadius="8"
+							Background="{DynamicResource LogoGradientBrush}">
+						<TextBlock Text="B"
+								   FontSize="27"
+								   FontWeight="Bold"
+								   Foreground="{DynamicResource LogoTextBrush}"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center" />
+					</Border>
+					<StackPanel Margin="16 0 0 0" VerticalAlignment="Center">
+						<TextBlock Text="BBS-FW Tool"
+								   FontSize="26"
+								   FontWeight="SemiBold"
+								   Foreground="{DynamicResource HeaderTextBrush}" />
+						<TextBlock Text="{DynamicResource Loc.App.Subtitle}"
+								   Foreground="{DynamicResource HeaderMutedTextBrush}" />
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Column="1"
+							Orientation="Horizontal"
+							VerticalAlignment="Center">
+					<Border Style="{StaticResource ShellPillStyle}"
+							Margin="0 0 10 0"
+							Visibility="{Binding ConnectionVm.IsConnected, Converter={StaticResource BoolToVis}}">
+						<TextBlock Text="{DynamicResource Loc.Status.Connected}"
+								   Foreground="{DynamicResource HeaderTextBrush}"
+								   VerticalAlignment="Center"
+								   FontWeight="SemiBold" />
+					</Border>
+					<Border Style="{StaticResource ShellPillStyle}"
+							Margin="0 0 10 0"
+							Visibility="{Binding ConnectionVm.IsDisconnected, Converter={StaticResource BoolToVis}}">
+						<TextBlock Text="{DynamicResource Loc.Status.Disconnected}"
+								   Foreground="{DynamicResource HeaderTextBrush}"
+								   VerticalAlignment="Center"
+								   FontWeight="SemiBold" />
+					</Border>
+					<Border Style="{StaticResource ShellPillStyle}">
+						<TextBlock Foreground="{DynamicResource HeaderMutedTextBrush}" VerticalAlignment="Center">
+							<Run Text="{DynamicResource Loc.Status.Firmware}" />
+							<Run Text="{Binding ConnectionVm.FirmwareVersion, Mode=OneWay}" FontWeight="SemiBold" />
+						</TextBlock>
+					</Border>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<Border Grid.Row="1"
+				Background="{DynamicResource SurfaceBrush}"
+				BorderBrush="{DynamicResource BorderBrush}"
+				BorderThickness="0 0 0 1">
+			<Grid Margin="24 10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Menu Grid.Column="0" VerticalAlignment="Center">
+					<MenuItem Header="{DynamicResource Loc.Menu.File}" VerticalContentAlignment="Center">
+						<MenuItem Header="{DynamicResource Loc.Menu.Open}" Command="{Binding OpenConfigCommand}" />
+						<MenuItem Header="{DynamicResource Loc.Menu.SaveAs}" Command="{Binding SaveConfigCommand}" />
+						<Separator />
+						<MenuItem Header="{DynamicResource Loc.Menu.SaveLog}" Command="{Binding SaveLogCommand}" />
+						<Separator />
+						<MenuItem Header="{DynamicResource Loc.Menu.Exit}" Command="{Binding ExitCommand}" />
+					</MenuItem>
+					<MenuItem Header="{DynamicResource Loc.Menu.Flash}" VerticalContentAlignment="Center">
+						<MenuItem Header="{DynamicResource Loc.Menu.Read}" IsEnabled="{Binding ConnectionVm.IsConnected}" Command="{Binding ReadFlashCommand}" />
+						<MenuItem Header="{DynamicResource Loc.Menu.Write}" IsEnabled="{Binding ConnectionVm.IsConnected}" Command="{Binding WriteFlashCommand}" />
+						<Separator />
+						<MenuItem Header="{DynamicResource Loc.Menu.Reset}" IsEnabled="{Binding ConnectionVm.IsConnected}" Command="{Binding ResetFlashCommand}" />
+					</MenuItem>
+					<MenuItem Header="{DynamicResource Loc.Menu.Options}" VerticalContentAlignment="Center">
+						<MenuItem Header="{DynamicResource Loc.Menu.Units}">
+							<MenuItem Header="{DynamicResource Loc.Menu.Metric}" IsCheckable="True" IsChecked="{Binding ConfigVm.UseMetricUnits}" />
+							<MenuItem Header="{DynamicResource Loc.Menu.Imperial}" IsCheckable="True" IsChecked="{Binding ConfigVm.UseImperialUnits}" />
+						</MenuItem>
+						<MenuItem Header="{DynamicResource Loc.Menu.Language}">
+							<MenuItem x:Name="EnglishMenuItem"
+									  Header="{DynamicResource Loc.Menu.English}"
+									  IsCheckable="True"
+									  Click="EnglishMenuItem_Click" />
+							<MenuItem x:Name="ChineseMenuItem"
+									  Header="{DynamicResource Loc.Menu.Chinese}"
+									  IsCheckable="True"
+									  Click="ChineseMenuItem_Click" />
+							<MenuItem x:Name="NorwegianMenuItem"
+									  Header="{DynamicResource Loc.Menu.Norwegian}"
+									  IsCheckable="True"
+									  Click="NorwegianMenuItem_Click" />
+						</MenuItem>
+						<MenuItem x:Name="DarkModeMenuItem"
+								  Header="{DynamicResource Loc.Menu.DarkMode}"
+								  IsCheckable="True"
+								  Click="ToggleTheme_Click" />
+					</MenuItem>
+					<MenuItem Header="{DynamicResource Loc.Menu.Help}" VerticalContentAlignment="Center">
+						<MenuItem Header="{DynamicResource Loc.Menu.About}" Command="{Binding ShowAboutCommand}" />
+					</MenuItem>
+				</Menu>
+
+				<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+					<Button x:Name="ThemeToggleButton"
+							Style="{StaticResource SecondaryButtonStyle}"
+							Width="118"
+							Click="ToggleTheme_Click" />
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<TabControl Grid.Row="2" Margin="24 22 24 22" TabStripPlacement="Left">
+			<TabItem Header="{DynamicResource Loc.Tab.Connection}">
+				<vw:ConnectionView DataContext="{Binding ConnectionVm}" />
+			</TabItem>
+			<TabItem Header="{DynamicResource Loc.Tab.System}">
+				<vw:SystemView />
+			</TabItem>
+			<TabItem Header="{DynamicResource Loc.Tab.AssistLevels}">
+				<vw:AssistLevelsView DataContext="{Binding AssistLevelsVm}" />
+			</TabItem>
+			<TabItem Header="{DynamicResource Loc.Tab.Calibration}" DataContext="{Binding CalibrationVm}">
+				<vw:CalibrationView />
+			</TabItem>
+			<TabItem Header="{DynamicResource Loc.Tab.EventLog}" DataContext="{Binding EventLogVm}">
+				<vw:EventLogView />
+			</TabItem>
+		</TabControl>
+
+		<Border Grid.Row="3"
+				Background="{DynamicResource SurfaceBrush}"
+				BorderBrush="{DynamicResource BorderBrush}"
+				BorderThickness="0 1 0 0"
+				Padding="24 9">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Text="{DynamicResource Loc.Status.Ready}"
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   VerticalAlignment="Center" />
+
+				<TextBlock Grid.Column="1"
+						   HorizontalAlignment="Center"
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   VerticalAlignment="Center">
+					<Run Text="{DynamicResource Loc.Status.ConfigVersion}" />
+					<Run Text="{Binding ConnectionVm.ConfigVersion, Mode=OneWay}" />
+					<Run Text="{DynamicResource Loc.Status.Controller}" />
+					<Run Text="{Binding ConnectionVm.Controller, Mode=OneWay}" />
+				</TextBlock>
+
+				<TextBlock x:Name="ThemeStatusText"
+						   Grid.Column="2"
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   VerticalAlignment="Center" />
+			</Grid>
+		</Border>
+	</Grid>
+</Window>
