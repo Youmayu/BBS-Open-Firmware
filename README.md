@@ -1,4 +1,4 @@
-# BBSHD/BBS02/TSDZ2 Open Source Firmware
+# BBSHD/BBS02B Open Source Firmware
 
 ![GitHub all releases](https://img.shields.io/github/downloads/Youmayu/BBS-Open-Firmware/total?style=for-the-badge)
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Youmayu/BBS-Open-Firmware?include_prereleases&style=for-the-badge)
@@ -8,9 +8,7 @@ This firmware is intended to replace the original Bafang firmware on the BBSHD/B
 
 This project is based on the original [danielnilsson9/bbs-fw](https://github.com/danielnilsson9/bbs-fw) firmware by Daniel Nilsson. This 2.0 fork is continued by He You Ma and adds updated documentation, configuration tool improvements, display compatibility options, and firmware changes for displays such as the 860C.
 
-This firmware is compatible with displays that use the Bafang display protocol. Some displays behave differently even when they use the same protocol, so this fork adds display-specific configuration where needed. If your display is not listed in the configuration tool, use the "Other displays" option.
-
-The firmware is also compatible with the TongSheng TSDZ2 controller but requires a custom cable in order to interface with Bafang-compatible displays.
+This fork is focused on Bafang BBSHD and BBS02B controllers. It is compatible with displays that use the Bafang display protocol. Some displays behave differently even when they use the same protocol, so this fork adds display-specific configuration where needed. If your display is not listed in the configuration tool, use the "Other displays" option.
 
 Warning: The firmware should NOT be flashed or configured while the e-bike battery is charging!
 
@@ -79,17 +77,11 @@ V1.?     | IAP15F2K61S2 | Unknown     | Supported from BBS-FW version 1.1.
 
 BBS02A - No idea, not tested, not recommended to try unless you have an already bricked controller.
 
-### TSDZ2
-
-Compatible with TSDZ2A/B using the STM microcontroller, which is nearly all of them.
-
-A custom cable is required in order to interface the TSDZ2 controller with Bafang-compatible displays.
-
 ## Displays and Controller
 
 Only displays with the Bafang display protocol can work.
 
-Also the controllers need to be those that are officially designed by Bafang, respectively TongSheng.
+The controller must be a supported Bafang BBSHD or BBS02B controller.
 
 Some shops sell kits with their own controller. Those controllers are not guaranteed to work.
 

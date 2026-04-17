@@ -9,10 +9,6 @@
       <Configuration>BBSHD</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="TSDZ2|x64">
-      <Configuration>TSDZ2</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -21,11 +17,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='BBSHD|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TSDZ2|x64'" Label="Configuration">
     <ConfigurationType>Makefile</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -43,9 +34,6 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='BBSHD|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='TSDZ2|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='BBS02|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -58,17 +46,6 @@
 make all TARGET_CONTROLLER=BBSHD</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>BBSHD;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath>C:/Program Files/SDCC/include;C:/Program Files/SDCC/include/mcs51;./</NMakeIncludeSearchPath>
-    <OutDir>$(SolutionDir)</OutDir>
-    <IntDir>build\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='TSDZ2|x64'">
-    <NMakeBuildCommandLine>make all TARGET_CONTROLLER=TSDZ2</NMakeBuildCommandLine>
-    <NMakeOutput>bbs-fw.hex</NMakeOutput>
-    <NMakeCleanCommandLine>make clean</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>make clean
-make all TARGET_CONTROLLER=TSDZ2</NMakeReBuildCommandLine>
-    <NMakePreprocessorDefinitions>TSDZ2;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath>C:/Program Files/SDCC/include;./</NMakeIncludeSearchPath>
     <OutDir>$(SolutionDir)</OutDir>
     <IntDir>build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -102,16 +79,6 @@ make all TARGET_CONTROLLER=BBS02</NMakeReBuildCommandLine>
     <ClCompile Include="extcom.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="throttle.c" />
-    <ClCompile Include="tsdz2\adc.c" />
-    <ClCompile Include="tsdz2\eeprom.c" />
-    <ClCompile Include="tsdz2\lights.c" />
-    <ClCompile Include="tsdz2\motor.c" />
-    <ClCompile Include="tsdz2\sensors.c" />
-    <ClCompile Include="tsdz2\system.c" />
-    <ClCompile Include="tsdz2\timers.c" />
-    <ClCompile Include="tsdz2\torquesensor.c" />
-    <ClCompile Include="tsdz2\uart.c" />
-    <ClCompile Include="tsdz2\watchdog.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adc.h" />
@@ -134,11 +101,6 @@ make all TARGET_CONTROLLER=BBS02</NMakeReBuildCommandLine>
     <ClInclude Include="sensors.h" />
     <ClInclude Include="throttle.h" />
     <ClInclude Include="timers.h" />
-    <ClInclude Include="tsdz2\cpu.h" />
-    <ClInclude Include="tsdz2\interrupt.h" />
-    <ClInclude Include="tsdz2\pins.h" />
-    <ClInclude Include="tsdz2\stm8.h" />
-    <ClInclude Include="tsdz2\timers.h" />
     <ClInclude Include="uart.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="motor.h" />

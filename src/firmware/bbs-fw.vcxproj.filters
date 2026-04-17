@@ -16,9 +16,6 @@
     <Filter Include="Source Files\bbsx">
       <UniqueIdentifier>{3afcc16a-9b6d-48ec-8c37-3d76d5814243}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tsdz2">
-      <UniqueIdentifier>{0753682d-650f-4c13-a2b2-7a748cc9fdee}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -60,15 +57,6 @@
     <ClCompile Include="bbsx\watchdog.c">
       <Filter>Source Files\bbsx</Filter>
     </ClCompile>
-    <ClCompile Include="tsdz2\motor.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\eeprom.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\watchdog.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
     <ClCompile Include="bbsx\sensors.c">
       <Filter>Source Files\bbsx</Filter>
     </ClCompile>
@@ -77,27 +65,6 @@
     </ClCompile>
     <ClCompile Include="bbsx\system.c">
       <Filter>Source Files\bbsx</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\adc.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\lights.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\sensors.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\system.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\timers.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\uart.c">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClCompile>
-    <ClCompile Include="tsdz2\torquesensor.c">
-      <Filter>Source Files\tsdz2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +134,6 @@
     <ClInclude Include="interrupt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tsdz2\interrupt.h">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClInclude>
     <ClInclude Include="intellisense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -178,18 +142,6 @@
     </ClInclude>
     <ClInclude Include="bbsx\cpu.h">
       <Filter>Source Files\bbsx</Filter>
-    </ClInclude>
-    <ClInclude Include="tsdz2\cpu.h">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClInclude>
-    <ClInclude Include="tsdz2\pins.h">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClInclude>
-    <ClInclude Include="tsdz2\stm8.h">
-      <Filter>Source Files\tsdz2</Filter>
-    </ClInclude>
-    <ClInclude Include="tsdz2\timers.h">
-      <Filter>Source Files\tsdz2</Filter>
     </ClInclude>
     <ClInclude Include="fwconfig.h">
       <Filter>Header Files</Filter>

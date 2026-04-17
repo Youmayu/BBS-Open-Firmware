@@ -9,7 +9,6 @@ endif
 # Select target controller (normally done from cmd line):
 #TARGET_CONTROLLER = BBSHD
 #TARGET_CONTROLLER = BBS02
-#TARGET_CONTROLLER = TSDZ2
 
 # Compiler
 CC = sdcc
@@ -32,12 +31,6 @@ ifeq ($(TARGET_CONTROLLER), BBS02)
 	CFLAGS += -mmcs51 --model-large --xram-size 1792
 	SUBDIRS += bbsx
 endif
-
-ifeq ($(TARGET_CONTROLLER), TSDZ2)
-	CFLAGS += -mstm8
-	SUBDIRS += tsdz2
-endif
-
 
 	
 INCS = $(wildcard *.h $(foreach fd, $(SUBDIRS), $(fd)/*.h))
@@ -63,9 +56,13 @@ echo:
 precheck:
 ifndef TARGET_CONTROLLER
 	$(info TARGET_CONTROLLER is not specified.)
-	$(info Set to one of [BBSHD, BBS02, TSDZ2])
+	$(info Set to one of [BBSHD, BBS02])
 	$(info Example:)
 	$(info $(null)  make all TARGET_CONTROLLER=BBSHD)
+	$(error )
+else ifeq ($(filter $(TARGET_CONTROLLER),BBSHD BBS02),)
+	$(info Unsupported TARGET_CONTROLLER "$(TARGET_CONTROLLER)".)
+	$(info Set to one of [BBSHD, BBS02])
 	$(error )
 endif
 	$(info Building bbs-fw for $(TARGET_CONTROLLER))
@@ -79,19 +76,19 @@ endif
 
 clean:
 ifeq ($(UNAME), Linux)
-	@rm -f bbsx/*.hex tsdz2/*.hex *.hex
-	@rm -f bbsx/*.ihx tsdz2/*.ihx *.ihx
-	@rm -f bbsx/*.asm tsdz2/*.asm *.asm
-	@rm -f bbsx/*.rel tsdz2/*.rel *.rel
-	@rm -f bbsx/*.lk  tsdz2/*.lk  *.lk
-	@rm -f bbsx/*.lst tsdz2/*.lst *.lst
-	@rm -f bbsx/*.rst tsdz2/*.rst *.rst
-	@rm -f bbsx/*.sym tsdz2/*.sym *.sym
-	@rm -f bbsx/*.cdb tsdz2/*.cdb *.cdb
-	@rm -f bbsx/*.map tsdz2/*.map *.map
-	@rm -f bbsx/*.elf tsdz2/*.elf *.elf
-	@rm -f bbsx/*.adb tsdz2/*.adb *.adb
-	@rm -f bbsx/*.mem tsdz2/*.mem *.mem
+	@rm -f bbsx/*.hex *.hex
+	@rm -f bbsx/*.ihx *.ihx
+	@rm -f bbsx/*.asm *.asm
+	@rm -f bbsx/*.rel *.rel
+	@rm -f bbsx/*.lk  *.lk
+	@rm -f bbsx/*.lst *.lst
+	@rm -f bbsx/*.rst *.rst
+	@rm -f bbsx/*.sym *.sym
+	@rm -f bbsx/*.cdb *.cdb
+	@rm -f bbsx/*.map *.map
+	@rm -f bbsx/*.elf *.elf
+	@rm -f bbsx/*.adb *.adb
+	@rm -f bbsx/*.mem *.mem
 else
 	@cmd /C clean.bat
 endif

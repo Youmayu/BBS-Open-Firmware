@@ -32,7 +32,6 @@ Current defaults in this repo:
 
 - BBSHD: `30 A`.
 - BBS02: `25 A`.
-- TSDZ2: `20 A`.
 
 Be careful with high current on BBS02. The upstream wiki warns that high current on BBS02 can trigger hard overcurrent protection or damage the motor.
 
@@ -153,7 +152,7 @@ Default: `200`.
 
 **Keep Current (%)**
 
-Motor current percentage to keep after cadence reaches the keep-current cadence threshold. This affects cadence-based PAS. It does not affect torque-based PAS.
+Motor current percentage to keep after cadence reaches the keep-current cadence threshold.
 
 Default: `60`.
 
@@ -223,7 +222,6 @@ Disables motor power for that assist level.
 Pedal assist. Variants:
 
 - `Cadence`: cadence-based pedal assist.
-- `Torque`: torque-based pedal assist, only available on controllers with a torque sensor such as TSDZ2.
 - `Variable`: pedal assist mode where the throttle controls assist power, but only while pedaling.
 
 **Throttle**
@@ -265,12 +263,6 @@ Approximate maximum cadence:
 Road-speed limit as a percentage of configured global max speed.
 
 Example: if global max speed is `100 km/h` and assist-level max speed is `25%`, the assist-level speed limit is `25 km/h`.
-
-**Torque Amplification**
-
-Only for torque PAS on controllers with torque sensors. This is the power amplification factor for the assist level.
-
-Example: 100 W human input with a torque amplification factor of 2 targets about 200 W motor output.
 
 **Enable Throttle**
 

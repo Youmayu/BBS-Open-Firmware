@@ -9,15 +9,12 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BBS02|SDCC = BBS02|SDCC
 		BBSHD|SDCC = BBSHD|SDCC
-		TSDZ2|SDCC = TSDZ2|SDCC
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.BBS02|SDCC.ActiveCfg = BBS02|x64
 		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.BBS02|SDCC.Build.0 = BBS02|x64
 		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.BBSHD|SDCC.ActiveCfg = BBSHD|x64
 		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.BBSHD|SDCC.Build.0 = BBSHD|x64
-		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.TSDZ2|SDCC.ActiveCfg = TSDZ2|x64
-		{1D7732D0-C5BC-4E67-9A24-EFF8000C007D}.TSDZ2|SDCC.Build.0 = TSDZ2|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

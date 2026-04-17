@@ -20,10 +20,6 @@ There are reported compatibility issues with some BBS02 controllers. Newer BBS02
 
 BBS02A is not tested and is not recommended unless the controller is already bricked and you accept the risk.
 
-## TSDZ2
-
-TSDZ2A/B controllers using the STM microcontroller are supported. This is most TSDZ2 controllers. A custom cable is required to interface with Bafang-compatible displays.
-
 ## Displays
 
 Only Bafang display protocol displays can work. Display compatibility also depends on how closely the display follows that protocol.

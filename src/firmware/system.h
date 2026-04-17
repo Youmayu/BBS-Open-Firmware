@@ -13,11 +13,7 @@
 
 #include <stdint.h>
 
-#if defined(BBSHD) || defined(BBS02)
 #include "bbsx/cpu.h"
-#elif defined(TSDZ2)
-#include "tsdz2/cpu.h"
-#endif
 
 void system_init();
 

@@ -28,12 +28,6 @@ Build BBS02 firmware:
 make -B all TARGET_CONTROLLER=BBS02
 ```
 
-Build TSDZ2 firmware:
-
-```powershell
-make -B all TARGET_CONTROLLER=TSDZ2
-```
-
 The generated firmware file is:
 
 ```text

@@ -1,6 +1,6 @@
 # Project Overview
 
-BBS-FW is open source replacement firmware for Bafang BBSHD and BBS02 motor controllers. It also supports TongSheng TSDZ2 controllers with Bafang-compatible displays when a suitable custom cable is used.
+BBS-FW is open source replacement firmware for Bafang BBSHD and BBS02 motor controllers. This fork is focused on Bafang BBSHD and BBS02B controllers.
 
 The firmware implements most original Bafang firmware behavior and adds extra configuration options that are not supported by the standard Bafang configuration tool. Use the BBS-FW configuration tool instead.
 
@@ -24,7 +24,7 @@ The firmware implements most original Bafang firmware behavior and adds extra co
 
 ## Compatibility Summary
 
-Only displays that use the Bafang display protocol can work. The controller must also be an official Bafang or TongSheng controller supported by this firmware. Some kits sold by shops use custom controllers and are not compatible.
+Only displays that use the Bafang display protocol can work. The controller must also be a supported Bafang BBSHD or BBS02B controller. Some kits sold by shops use custom controllers and are not compatible.
 
 For BBSHD, the current code supports controller revisions with the STC15W4K56S4 or IAP15W4K61S4 MCU. For BBS02B, newer controllers are expected to work, but older BBS02 controllers have reported compatibility issues.
 

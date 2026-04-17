@@ -28,8 +28,7 @@ namespace BBSFW.Model
 		{
 			Unknown = 0,
 			BBSHD = 1,
-			BBS02 = 2,
-			TSDZ2 = 3
+			BBS02 = 2
 		}
 
 		private const int REQUEST_TYPE_READ =			0x01;
@@ -338,7 +337,7 @@ namespace BBSFW.Model
 				{
 					_isConnecting = false;
 					_isConnected = true;
-					_controllerType = (size == MessageSizeV1 ? Controller.BBSHD : (Controller)_rxBuffer[6]);
+					_controllerType = (size == MessageSizeV1 ? Controller.BBSHD : ParseControllerType(_rxBuffer[6]));
 
 					Connected?.Invoke(ControllerType, String.Format("{0}.{1}.{2}", major, minor, patch), ConfigVersion); ;
 
@@ -634,6 +633,16 @@ namespace BBSFW.Model
 			}
 
 			return true;
+		}
+
+		private static Controller ParseControllerType(byte rawControllerType)
+		{
+			return rawControllerType switch
+			{
+				(byte)Controller.BBSHD => Controller.BBSHD,
+				(byte)Controller.BBS02 => Controller.BBS02,
+				_ => Controller.Unknown
+			};
 		}
 
 

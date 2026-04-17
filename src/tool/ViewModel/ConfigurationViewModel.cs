@@ -82,11 +82,6 @@ namespace BBSFW.ViewModel
 
 		// support 
 
-		public bool IsTorqueSensorSupported
-		{
-			get { return _config.IsFeatureSupported(Configuration.Feature.TorqueSensor); }
-		}
-
 		public bool IsShiftSensorSupported
 		{
 			get { return _config.IsFeatureSupported(Configuration.Feature.ShiftSensor); }

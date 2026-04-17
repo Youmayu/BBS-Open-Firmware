@@ -8,6 +8,10 @@
 #ifndef _FWCONFIG_H_
 #define _FWCONFIG_H_
 
+#if !defined(BBSHD) && !defined(BBS02)
+	#error "Unsupported TARGET_CONTROLLER. Use BBSHD or BBS02."
+#endif
+
 #if defined(BBSHD)
 	#define HAS_MOTOR_TEMP_SENSOR				1
 #else
@@ -22,11 +26,7 @@
 #endif
 
 
-#if defined(TSDZ2)
-	#define HAS_TORQUE_SENSOR					1
-#else
-	#define HAS_TORQUE_SENSOR					0
-#endif
+#define HAS_TORQUE_SENSOR						0
 
 #if defined(BBSHD) || defined(BBS02)
 	#define HAS_SHIFT_SENSOR_SUPPORT			1
@@ -43,11 +43,7 @@
 	#define MAX_CADENCE_RPM_X10					1200
 #endif
 
-#if defined(BBS02) || defined(BBSHD)
-	#define PAS_PULSES_REVOLUTION				24
-#elif defined(TSDZ2)
-	#define PAS_PULSES_REVOLUTION				20
-#endif
+#define PAS_PULSES_REVOLUTION					24
 
  // Applied to both motor and controller tmeperature sensor
 #define MAX_TEMPERATURE							85
@@ -160,7 +156,7 @@
 // uncomment and select option above
 // #define DISPLAY_RANGE_FIELD_DATA		DISPLAY_RANGE_FIELD_ZERO
 
-// default to temperature if temperature sensors available (BBS2/BBSHD), else power (TSDZ2)
+// default to temperature if temperature sensors are available
 #ifndef DISPLAY_RANGE_FIELD_DATA
 	#if HAS_CONTROLLER_TEMP_SENSOR || HAS_MOTOR_TEMP_SENSOR
 	#define DISPLAY_RANGE_FIELD_DATA		DISPLAY_RANGE_FIELD_TEMPERATURE

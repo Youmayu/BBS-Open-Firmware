@@ -372,7 +372,11 @@ void apply_pretension(uint8_t* target_current)
 
 void apply_pas_cadence(uint8_t* target_current, uint8_t throttle_percent)
 {
-	if ((assist_level_data.level.flags & ASSIST_FLAG_PAS) && !(assist_level_data.level.flags & ASSIST_FLAG_PAS_TORQUE))
+	if ((assist_level_data.level.flags & ASSIST_FLAG_PAS)
+#if HAS_TORQUE_SENSOR
+		&& !(assist_level_data.level.flags & ASSIST_FLAG_PAS_TORQUE)
+#endif
+		)
 	{
 		if (pas_is_pedaling_forwards() && pas_get_pulse_counter() > g_config.pas_start_delay_pulses)
 		{

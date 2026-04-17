@@ -22,7 +22,6 @@ namespace BBSFW.ViewModel
 		public enum AssistPasVariant
 		{
 			Cadence,
-			Torque,
 			Variable
 		}
 
@@ -44,11 +43,6 @@ namespace BBSFW.ViewModel
 				{
 					new ValueItemViewModel<AssistPasVariant>(AssistPasVariant.Cadence, "Cadence")
 				};
-
-				if (_configVm.IsTorqueSensorSupported)
-				{
-					variants.Add(new ValueItemViewModel<AssistPasVariant>(AssistPasVariant.Torque, "Torque"));
-				}
 
 				variants.Add(new ValueItemViewModel<AssistPasVariant>(AssistPasVariant.Variable, "Variable"));
 
@@ -128,11 +122,7 @@ namespace BBSFW.ViewModel
 			get
 			{
 				var variant = AssistPasVariant.Cadence;
-				if (_level.Type.HasFlag(Configuration.AssistFlagsType.PasTorque))
-				{
-					variant = AssistPasVariant.Torque;
-				}
-				else if (_level.Type.HasFlag(Configuration.AssistFlagsType.PasVariable))
+				if (_level.Type.HasFlag(Configuration.AssistFlagsType.PasVariable))
 				{
 					variant = AssistPasVariant.Variable;
 				}
@@ -146,7 +136,6 @@ namespace BBSFW.ViewModel
 					_level.Type = ApplyPasVariantFlag(value.Value, _level.Type);
 					OnPropertyChanged(nameof(SelectedPasVariant));
 					OnPropertyChanged(nameof(IsPasAssistVariableVariant));
-					OnPropertyChanged(nameof(IsPasAssistTorqueVariant));
 
 					switch(value.Value)
 					{
@@ -208,13 +197,6 @@ namespace BBSFW.ViewModel
 		{
 			get { return _level.Type.HasFlag(Configuration.AssistFlagsType.PasVariable); }
 		}
-
-		public bool IsPasAssistTorqueVariant
-		{
-			get { return _level.Type.HasFlag(Configuration.AssistFlagsType.PasTorque); }
-		}
-
-
 
 		public uint TargetCurrentPercent
 		{
@@ -325,9 +307,6 @@ namespace BBSFW.ViewModel
 			var result = ClearPasVariantFlag(flags);
 			switch (pasVariant)
 			{
-				case AssistPasVariant.Torque:
-					result |= Configuration.AssistFlagsType.PasTorque;
-					break;
 				case AssistPasVariant.Variable:
 					result |= Configuration.AssistFlagsType.PasVariable;
 					break;

@@ -24,7 +24,6 @@ The default is:
 
 - BBSHD: temperature, maximum of controller and motor temperature.
 - BBS02/BBS02B: temperature, controller temperature only.
-- TSDZ2: power, unless the compile-time setting is changed.
 
 The range-field option is a compile-time firmware option. It is not exposed in the configuration tool.
 

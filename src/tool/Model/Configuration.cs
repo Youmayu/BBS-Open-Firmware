@@ -25,7 +25,6 @@ namespace BBSFW.Model
 		public enum Feature
 		{
 			ShiftSensor,
-			TorqueSensor,
 			ControllerTemperatureSensor,
 			MotorTemperatureSensor
 		}
@@ -154,8 +153,6 @@ namespace BBSFW.Model
 						return 33;
 					case BbsfwConnection.Controller.BBS02:
 						return 30;
-					case BbsfwConnection.Controller.TSDZ2:
-						return 20;
 				}
 
 				return 50;
@@ -275,21 +272,16 @@ namespace BBSFW.Model
 
 		public bool IsFeatureSupported(Feature feature)
 		{
-			if (Target == BbsfwConnection.Controller.Unknown)
-			{
-				return true;
-			}
-
 			switch (feature)
 			{
 				case Feature.ShiftSensor:
-					return new[] { BbsfwConnection.Controller.BBSHD, BbsfwConnection.Controller.BBS02 }.Contains(Target);
-				case Feature.TorqueSensor:
-					return new[] { BbsfwConnection.Controller.TSDZ2 }.Contains(Target);
+					return Target == BbsfwConnection.Controller.Unknown ||
+						new[] { BbsfwConnection.Controller.BBSHD, BbsfwConnection.Controller.BBS02 }.Contains(Target);
 				case Feature.ControllerTemperatureSensor:
-					return new[] { BbsfwConnection.Controller.BBSHD, BbsfwConnection.Controller.BBS02 }.Contains(Target);
+					return Target == BbsfwConnection.Controller.Unknown ||
+						new[] { BbsfwConnection.Controller.BBSHD, BbsfwConnection.Controller.BBS02 }.Contains(Target);
 				case Feature.MotorTemperatureSensor:
-					return new[] { BbsfwConnection.Controller.BBSHD }.Contains(Target);
+					return Target == BbsfwConnection.Controller.Unknown || Target == BbsfwConnection.Controller.BBSHD;
 			}
 
 			return false;
@@ -872,6 +864,17 @@ namespace BBSFW.Model
 				SportAssistLevels[i].MaxSpeedPercent = cfg.SportAssistLevels[i].MaxSpeedPercent;
 				SportAssistLevels[i].TorqueAmplificationFactor = cfg.SportAssistLevels[i].TorqueAmplificationFactor;
 			}
+
+			SanitizeUnsupportedFeatures();
+		}
+
+		private void SanitizeUnsupportedFeatures()
+		{
+			foreach (var level in StandardAssistLevels.Concat(SportAssistLevels))
+			{
+				level.Type &= ~AssistFlagsType.PasTorque;
+				level.TorqueAmplificationFactor = 0;
+			}
 		}
 
 		public void ReadFromFile(string filepath)
@@ -928,7 +931,6 @@ namespace BBSFW.Model
 				ValidateLimits(StandardAssistLevels[i].MaxThrottlePercent, 0, 100, $"Standard (Level {i}): Max Throttle (%)");
 				ValidateLimits(StandardAssistLevels[i].MaxCadencePercent, 0, 100, $"Standard (Level {i}): Max Cadence (%)");
 				ValidateLimits(StandardAssistLevels[i].MaxSpeedPercent, 0, 100, $"Standard (Level {i}): Max Speed (%)");
-				ValidateLimits((uint)StandardAssistLevels[i].TorqueAmplificationFactor, 0, 25, $"Standard (Level {i}): Torque Amplification");
 			}
 
 			for (int i = 0; i < SportAssistLevels.Length; ++i)
@@ -937,7 +939,6 @@ namespace BBSFW.Model
 				ValidateLimits(SportAssistLevels[i].MaxThrottlePercent, 0, 100, $"Sport (Level {i}): Max Throttle (%)");
 				ValidateLimits(SportAssistLevels[i].MaxCadencePercent, 0, 100, $"Sport (Level {i}): Max Cadence (%)");
 				ValidateLimits(SportAssistLevels[i].MaxSpeedPercent, 0, 100, $"Sport (Level {i}): Max Speed (%)");
-				ValidateLimits((uint)SportAssistLevels[i].TorqueAmplificationFactor, 0, 25, $"Sport (Level {i}): Torque Amplification");
 			}
 		}
 
