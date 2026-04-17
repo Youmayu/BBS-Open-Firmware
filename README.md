@@ -51,7 +51,7 @@ https://github.com/Youmayu/BBS-Open-Firmware/wiki/Build-from-Source
 * Configurable display behavior, including 860C work-mode handling.
 * Updated configuration tool with modern UI, dark mode, and language selection.
 
-![Config Tool]<img width="1156" height="744" alt="image" src="https://github.com/user-attachments/assets/4ff3f15e-54ba-4373-ab16-72dc3f88acbb" />
+![Config Tool] <img width="1156" height="744" alt="image" src="https://github.com/user-attachments/assets/4ff3f15e-54ba-4373-ab16-72dc3f88acbb" /> !
 
 
 ## Supported Hardware
