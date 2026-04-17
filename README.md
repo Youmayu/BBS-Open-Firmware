@@ -1,8 +1,8 @@
 # BBSHD/BBS02/TSDZ2 Open Source Firmware
 
-![GitHub all releases](https://img.shields.io/github/downloads/Youmayu/bbs-fw-2.0/total?style=for-the-badge)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Youmayu/bbs-fw-2.0?include_prereleases&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/Youmayu/bbs-fw-2.0?style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/Youmayu/BBS-Open-Firmware/total?style=for-the-badge)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Youmayu/BBS-Open-Firmware?include_prereleases&style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/Youmayu/BBS-Open-Firmware?style=for-the-badge)
 
 This firmware is intended to replace the original Bafang firmware on the BBSHD/BBS02 motor controller. Almost all functionality of the original firmware has been implemented and additional features have been added.
 
@@ -15,16 +15,16 @@ The firmware is also compatible with the TongSheng TSDZ2 controller but requires
 Warning: The firmware should NOT be flashed or configured while the e-bike battery is charging!
 
 **Download**  
-https://github.com/Youmayu/bbs-fw-2.0/releases
+https://github.com/Youmayu/BBS-Open-Firmware/releases
 
 **Install**  
-https://github.com/Youmayu/bbs-fw-2.0/wiki/Flash-Firmware
+https://github.com/Youmayu/BBS-Open-Firmware/wiki/Flash-Firmware
 
 **Configure**  
-https://github.com/Youmayu/bbs-fw-2.0/wiki/Configuration-Tool
+https://github.com/Youmayu/BBS-Open-Firmware/wiki/Configuration-Tool
 
 **Build from Source**  
-https://github.com/Youmayu/bbs-fw-2.0/wiki/Build-from-Source
+https://github.com/Youmayu/BBS-Open-Firmware/wiki/Build-from-Source
 
 ## Known Issues
 
@@ -113,7 +113,7 @@ The firmware also reuses some standard Bafang display fields:
 
 More information is available in the wiki:
 
-https://github.com/Youmayu/bbs-fw-2.0/wiki/Display-Behavior
+https://github.com/Youmayu/BBS-Open-Firmware/wiki/Display-Behavior
 
 ## Build from Source
 

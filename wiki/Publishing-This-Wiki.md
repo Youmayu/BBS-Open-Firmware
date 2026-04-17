@@ -5,7 +5,7 @@ These files are normal Markdown pages prepared for a GitHub wiki.
 GitHub stores repository wikis in a separate git repository. For this project, the wiki repository URL should be:
 
 ```text
-https://github.com/Youmayu/bbs-fw-2.0.wiki.git
+https://github.com/Youmayu/BBS-Open-Firmware.wiki.git
 ```
 
 ## Manual Publishing
@@ -22,9 +22,9 @@ If the wiki repository is enabled, you can also publish by cloning the wiki repo
 Example:
 
 ```powershell
-git clone https://github.com/Youmayu/bbs-fw-2.0.wiki.git bbs-fw-2.0.wiki
-copy wiki\*.md bbs-fw-2.0.wiki\
-cd bbs-fw-2.0.wiki
+git clone https://github.com/Youmayu/BBS-Open-Firmware.wiki.git BBS-Open-Firmware.wiki
+copy wiki\*.md BBS-Open-Firmware.wiki\
+cd BBS-Open-Firmware.wiki
 git add .
 git commit -m "Add project wiki"
 git push
