@@ -335,9 +335,19 @@ namespace BBSFW.Model
 
 				if (_isConnecting)
 				{
+					var controllerType = (size == MessageSizeV1 ? Controller.BBSHD : ParseControllerType(_rxBuffer[6]));
+					if (controllerType == Controller.Unknown)
+					{
+						System.Diagnostics.Debug.WriteLine($"Unsupported controller type: {_rxBuffer[6]}");
+						_isConnecting = false;
+						_isConnected = false;
+						_controllerType = Controller.Unknown;
+						return size;
+					}
+
 					_isConnecting = false;
 					_isConnected = true;
-					_controllerType = (size == MessageSizeV1 ? Controller.BBSHD : ParseControllerType(_rxBuffer[6]));
+					_controllerType = controllerType;
 
 					Connected?.Invoke(ControllerType, String.Format("{0}.{1}.{2}", major, minor, patch), ConfigVersion); ;
 
@@ -632,7 +642,7 @@ namespace BBSFW.Model
 				Thread.Sleep(200);
 			}
 
-			return true;
+			return _isConnected;
 		}
 
 		private static Controller ParseControllerType(byte rawControllerType)
