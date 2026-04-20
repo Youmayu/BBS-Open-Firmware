@@ -74,7 +74,7 @@ Do not flash other BBSHD controller revisions unless you accept the risk of bric
 
 There are compatibility issues reported, and this firmware may be incompatible with older BBS02 controllers.
 
-If you have a newer BBS02B you are probably fine, but if you have an older controller it might not be a good idea to flash this firmware.
+Tested on BBS02B controllers and no issues so far.
 
 Revision | MCU          | Released    | Comment
 -------- | ------------ | ----------- | --------------------
