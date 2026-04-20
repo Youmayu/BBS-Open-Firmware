@@ -1,8 +1,13 @@
 # BBSHD/BBS02B Open Source Firmware
 
-![GitHub all releases](https://img.shields.io/github/downloads/Youmayu/BBS-Open-Firmware/total?style=for-the-badge)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Youmayu/BBS-Open-Firmware?include_prereleases&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/Youmayu/BBS-Open-Firmware?style=for-the-badge)
+[![Downloads](https://img.shields.io/github/downloads/Youmayu/BBS-Open-Firmware/total?style=for-the-badge&label=downloads)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
+[![Latest Release](https://img.shields.io/github/v/release/Youmayu/BBS-Open-Firmware?include_prereleases&style=for-the-badge&label=latest)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
+[![Release Date](https://img.shields.io/github/release-date-pre/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
+[![License](https://img.shields.io/github/license/Youmayu/BBS-Open-Firmware?style=for-the-badge)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/commits/main)
+[![Repo Size](https://img.shields.io/github/repo-size/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware)
+[![Firmware Targets](https://img.shields.io/badge/firmware-BBSHD%20%7C%20BBS02B-blue?style=for-the-badge)](#supported-hardware)
+[![Configurator](https://img.shields.io/badge/configurator-Windows%20x64-0078D4?style=for-the-badge)](#build-configuration-tool)
 
 This firmware is intended to replace the original Bafang firmware on the BBSHD/BBS02 motor controller. Almost all functionality of the original firmware has been implemented and additional features have been added.
 
