@@ -2,6 +2,16 @@
 
 This firmware is intended to work with displays that use the Bafang display protocol. Some display fields are repurposed because the standard Bafang protocol does not provide dedicated fields for every firmware value.
 
+## Display Selection
+
+The configuration tool includes display-specific selections:
+
+- `Other displays`: standard Bafang display work-mode handling.
+- `P850C`: standard Bafang display work-mode handling.
+- `860C`: ignores display work-mode requests so the controller controls ECO/Sport mode.
+
+P850C uses the same firmware behavior as `Other displays`. Only 860C enables special work-mode handling.
+
 ## 860C Work Mode
 
 Some 860C displays continuously send their configured work mode, such as ECO or Sport. That can override a controller-side operation-mode selection, for example PAS 0 plus the lights button.

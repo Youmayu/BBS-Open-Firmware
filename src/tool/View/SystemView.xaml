@@ -440,6 +440,8 @@
 						<LineBreak />
 						<Run FontWeight="Bold">Other displays</Run> - Uses standard Bafang display work-mode handling.
 						<LineBreak />
+						<Run FontWeight="Bold">P850C</Run> - Uses standard Bafang display work-mode handling.
+						<LineBreak />
 						<Run FontWeight="Bold">860C</Run> - Ignores display work-mode requests so the controller controls ECO/Sport mode.
 						</TextBlock>
 					</TextBlock.ToolTip>

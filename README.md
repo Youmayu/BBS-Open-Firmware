@@ -91,6 +91,7 @@ Some shops sell kits with their own controller. Those controllers are not guaran
 The configuration tool includes a display selection option:
 
 * **Other displays** - Uses the standard Bafang display work-mode handling.
+* **P850C** - Uses the standard Bafang display work-mode handling.
 * **860C** - Ignores display work-mode requests so the controller controls ECO/Sport mode.
 
 The 860C can continuously send its configured work mode to the controller. If the display is set to ECO mode, it can force the controller back to ECO and prevent the usual controller-side ECO/Sport toggle from working. Selecting 860C makes the motor ignore that display work-mode command after validating the packet checksum.

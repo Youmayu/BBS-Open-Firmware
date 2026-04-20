@@ -8,7 +8,15 @@ namespace BBSFW.ViewModel
 {
 	public class ConfigurationViewModel : ObservableObject
 	{
+		public enum DisplaySelection
+		{
+			Other,
+			P850C,
+			Display860C
+		}
+
 		private Configuration _config;
+		private DisplaySelection _displaySelection = DisplaySelection.Other;
 
 		public static List<uint> PasStartDelayOptions { get; } =
 			new List<uint>() {
@@ -72,11 +80,12 @@ namespace BBSFW.ViewModel
 				new ValueItemViewModel<Configuration.LightsModeOptions>(Configuration.LightsModeOptions.BrakeLight, "Brake Light"),
 			};
 
-		public static List<ValueItemViewModel<Configuration.DisplayType>> DisplayTypeOptions { get; } =
-			new List<ValueItemViewModel<Configuration.DisplayType>>
+		public static List<ValueItemViewModel<DisplaySelection>> DisplayTypeOptions { get; } =
+			new List<ValueItemViewModel<DisplaySelection>>
 			{
-				new ValueItemViewModel<Configuration.DisplayType>(Configuration.DisplayType.Other, "Other displays"),
-				new ValueItemViewModel<Configuration.DisplayType>(Configuration.DisplayType.Display860C, "860C"),
+				new ValueItemViewModel<DisplaySelection>(DisplaySelection.Other, "Other displays"),
+				new ValueItemViewModel<DisplaySelection>(DisplaySelection.P850C, "P850C"),
+				new ValueItemViewModel<DisplaySelection>(DisplaySelection.Display860C, "860C"),
 			};
 
 
@@ -518,17 +527,19 @@ namespace BBSFW.ViewModel
 			}
 		}
 
-		public ValueItemViewModel<Configuration.DisplayType> Display
+		public ValueItemViewModel<DisplaySelection> Display
 		{
 			get
 			{
-				return DisplayTypeOptions.FirstOrDefault((e) => e.Value == _config.Display);
+				return DisplayTypeOptions.FirstOrDefault((e) => e.Value == _displaySelection);
 			}
 			set
 			{
-				if (_config.Display != value.Value)
+				var displayType = ToDisplayType(value.Value);
+				if (_displaySelection != value.Value || _config.Display != displayType)
 				{
-					_config.Display = value.Value;
+					_displaySelection = value.Value;
+					_config.Display = displayType;
 					OnPropertyChanged(nameof(Display));
 				}
 			}
@@ -614,6 +625,7 @@ namespace BBSFW.ViewModel
 		public void ReadConfiguration(string filepath)
 		{
 			_config.ReadFromFile(filepath);
+			_displaySelection = FromDisplayType(_config.Display);
 			TriggerPropertyChanges();
 		}
 
@@ -625,6 +637,7 @@ namespace BBSFW.ViewModel
 		public void UpdateFrom(Configuration config)
 		{
 			_config.CopyFrom(config);
+			_displaySelection = FromDisplayType(_config.Display);
 			TriggerPropertyChanges();
 		}
 
@@ -641,6 +654,20 @@ namespace BBSFW.ViewModel
 		private static uint MphToKph(uint mph)
 		{
 			return (uint)Math.Round(mph * 1.609344);
+		}
+
+		private static Configuration.DisplayType ToDisplayType(DisplaySelection selection)
+		{
+			return selection == DisplaySelection.Display860C
+				? Configuration.DisplayType.Display860C
+				: Configuration.DisplayType.Other;
+		}
+
+		private static DisplaySelection FromDisplayType(Configuration.DisplayType displayType)
+		{
+			return displayType == Configuration.DisplayType.Display860C
+				? DisplaySelection.Display860C
+				: DisplaySelection.Other;
 		}
 
 		private void TriggerPropertyChanges()
