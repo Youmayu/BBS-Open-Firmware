@@ -641,6 +641,42 @@ namespace BBSFW.ViewModel
 			TriggerPropertyChanges();
 		}
 
+		public void ApplyLegalPreset()
+		{
+			ApplyCommonPresetValues(maxCurrentAmps: 18, maxSpeedKph: 25, currentRamp: 8);
+			ThrottleGlobalSpeedLimit = ThrottleGlobalSpeedLimitOptions.First(e => e.Value == Configuration.ThrottleGlobalSpeedLimitOptions.Enabled);
+			ThrottleGlobalSpeedLimitPercent = 100;
+			ApplyAssistProfile(
+				new uint[] { 0, 15, 22, 30, 38, 46, 55, 64, 75, 88 },
+				new uint[] { 0, 20, 30, 40, 50, 60, 70, 80, 90, 100 },
+				enableThrottle: false);
+			TriggerPropertyChanges();
+		}
+
+		public void ApplyBalancedPreset()
+		{
+			ApplyCommonPresetValues(maxCurrentAmps: 22, maxSpeedKph: 32, currentRamp: 10);
+			ThrottleGlobalSpeedLimit = ThrottleGlobalSpeedLimitOptions.First(e => e.Value == Configuration.ThrottleGlobalSpeedLimitOptions.StandardLevels);
+			ThrottleGlobalSpeedLimitPercent = 100;
+			ApplyAssistProfile(
+				new uint[] { 0, 18, 28, 38, 48, 58, 68, 78, 88, 100 },
+				new uint[] { 0, 25, 35, 45, 55, 65, 75, 85, 95, 100 },
+				enableThrottle: true);
+			TriggerPropertyChanges();
+		}
+
+		public void ApplyOpenPreset()
+		{
+			ApplyCommonPresetValues(maxCurrentAmps: 28, maxSpeedKph: 45, currentRamp: 12);
+			ThrottleGlobalSpeedLimit = ThrottleGlobalSpeedLimitOptions.First(e => e.Value == Configuration.ThrottleGlobalSpeedLimitOptions.Disabled);
+			ThrottleGlobalSpeedLimitPercent = 100;
+			ApplyAssistProfile(
+				new uint[] { 0, 20, 30, 40, 50, 60, 70, 80, 90, 100 },
+				new uint[] { 0, 30, 40, 50, 60, 70, 80, 90, 100, 100 },
+				enableThrottle: true);
+			TriggerPropertyChanges();
+		}
+
 		public Configuration GetConfig()
 		{
 			return _config;
@@ -668,6 +704,67 @@ namespace BBSFW.ViewModel
 			return displayType == Configuration.DisplayType.Display860C
 				? DisplaySelection.Display860C
 				: DisplaySelection.Other;
+		}
+
+		private void ApplyCommonPresetValues(uint maxCurrentAmps, uint maxSpeedKph, uint currentRamp)
+		{
+			MaxCurrentAmps = maxCurrentAmps;
+			CurrentRampAmpsSecond = currentRamp;
+			MaxSpeedKph = maxSpeedKph;
+			UseSpeedSensor = true;
+			UseShiftSensor = IsShiftSensorSupported;
+			UsePushWalk = true;
+			UseTemperatureSensor = Configuration.TemperatureSensor.All;
+			LightsMode = LightsModeOptions.First(e => e.Value == Configuration.LightsModeOptions.Default);
+			PasStartDelayDegrees = 45;
+			PasStopDelayMilliseconds = 250;
+			PasKeepCurrentPercent = 60;
+			PasKeepCurrentCadenceRpm = 80;
+			ThrottleStartVoltageMillivolts = 1100;
+			ThrottleEndVoltageMillivolts = 4200;
+			ThrottleStartCurrentPercent = 10;
+			WheelSizeInch = WheelSizeInch < 10 ? 26 : WheelSizeInch;
+			SpeedSensorSignals = SpeedSensorSignals == 0 ? 1 : SpeedSensorSignals;
+			MaxBatteryVolts = MaxBatteryVolts < 1 ? 58.8f : MaxBatteryVolts;
+			LowCutoffVolts = LowCutoffVolts < 1 ? 39u : LowCutoffVolts;
+			StartupAssistLevel = 1;
+			AssistModeSelection = AssistModeSelectOptions.First(e => e.Value == Configuration.AssistModeSelect.Standard);
+		}
+
+		private void ApplyAssistProfile(uint[] standardCurrent, uint[] sportCurrent, bool enableThrottle)
+		{
+			for (var i = 0; i < StandardAssistLevels.Count; i++)
+			{
+				ApplyAssistLevel(StandardAssistLevels[i], standardCurrent[i], enableThrottle);
+			}
+
+			for (var i = 0; i < SportAssistLevels.Count; i++)
+			{
+				ApplyAssistLevel(SportAssistLevels[i], sportCurrent[i], enableThrottle);
+			}
+		}
+
+		private static void ApplyAssistLevel(AssistLevelViewModel level, uint currentPercent, bool enableThrottle)
+		{
+			if (currentPercent == 0)
+			{
+				level.SelectedType = level.AssistBaseTypeOptions.First(e => e.Value == AssistLevelViewModel.AssistBaseType.Disabled);
+				level.TargetCurrentPercent = 0;
+				level.MaxThrottlePercent = 0;
+				level.MaxCadencePercent = 0;
+				level.MaxSpeedPercent = 0;
+				return;
+			}
+
+			level.SelectedType = level.AssistBaseTypeOptions.First(e => e.Value == AssistLevelViewModel.AssistBaseType.Pas);
+			level.SelectedPasVariant = level.AssistPasVariantOptions.First(e => e.Value == AssistLevelViewModel.AssistPasVariant.Cadence);
+			level.TargetCurrentPercent = currentPercent;
+			level.MaxCadencePercent = 100;
+			level.MaxSpeedPercent = 100;
+			level.IsThrottleEnabled = enableThrottle;
+			level.IsThrottleCadenceOverrideEnabled = false;
+			level.IsThrottleSpeedOverrideEnabled = false;
+			level.MaxThrottlePercent = enableThrottle ? currentPercent : 0;
 		}
 
 		private void TriggerPropertyChanges()

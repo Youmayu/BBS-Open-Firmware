@@ -4,6 +4,7 @@
         Title="BBS-FW Tool"
         Width="520"
         Height="300"
+        Icon="/Assets/AppIcon.ico"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -34,16 +35,19 @@
 					</Grid.RowDefinitions>
 
 					<StackPanel Orientation="Horizontal">
-						<Border Width="54"
-								Height="54"
-								CornerRadius="8"
-								Background="{DynamicResource LogoGradientBrush}">
-							<TextBlock Text="B"
-									   FontSize="27"
-									   FontWeight="Bold"
-									   Foreground="{DynamicResource LogoTextBrush}"
-									   HorizontalAlignment="Center"
-									   VerticalAlignment="Center" />
+						<Border Width="56"
+								Height="56"
+								CornerRadius="16"
+								Background="#18FFFFFF"
+								BorderBrush="#33FFFFFF"
+								BorderThickness="1">
+							<Image Source="/Assets/AppIcon.ico"
+								   Width="44"
+								   Height="44"
+								   Stretch="Uniform"
+								   RenderOptions.BitmapScalingMode="HighQuality"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center" />
 						</Border>
 						<StackPanel Margin="16 0 0 0" VerticalAlignment="Center">
 							<TextBlock Text="BBS-FW Tool"

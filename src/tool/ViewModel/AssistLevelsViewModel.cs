@@ -39,6 +39,9 @@ namespace BBSFW.ViewModel
 				{
 					_selectedOperationModePage = value;
 					OnPropertyChanged(nameof(SelectedOperationModePage));
+					SelectedAssistLevel = value.Value == OperationMode.Standard
+						? ConfigVm.StandardAssistLevels[0]
+						: ConfigVm.SportAssistLevels[0];
 				}
 			}
 		}
@@ -61,6 +64,7 @@ namespace BBSFW.ViewModel
 		{
 			_configVm = config;
 			SelectedOperationModePage = OperationModes[0];
+			SelectedAssistLevel = ConfigVm.StandardAssistLevels[0];
 		}
 
 	}

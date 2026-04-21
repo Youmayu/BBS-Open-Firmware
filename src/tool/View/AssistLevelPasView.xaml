@@ -1,153 +1,115 @@
 <UserControl x:Class="BBSFW.View.AssistLevelPasView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BBSFW.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+	<StackPanel>
+		<Grid Margin="0 0 0 14">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="220" />
+			</Grid.ColumnDefinitions>
+			<StackPanel>
+				<TextBlock Text="PAS variant" FontWeight="SemiBold" />
+				<TextBlock Text="Cadence uses a fixed assist target. Variable responds more dynamically but disables throttle on that assist level."
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   TextWrapping="Wrap"
+						   Margin="0 3 18 0" />
+			</StackPanel>
+			<ComboBox Grid.Column="1" ItemsSource="{Binding AssistPasVariantOptions}" SelectedValue="{Binding SelectedPasVariant, UpdateSourceTrigger=PropertyChanged}" />
+		</Grid>
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
+		<Grid Margin="0 0 0 14">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="120" />
+			</Grid.ColumnDefinitions>
+			<StackPanel>
+				<TextBlock Text="Target current" FontWeight="SemiBold" />
+				<TextBlock Text="Percent of global max current allowed for this assist level."
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   TextWrapping="Wrap"
+						   Margin="0 3 18 0" />
+			</StackPanel>
+			<TextBox Grid.Column="1" Text="{Binding TargetCurrentPercent, UpdateSourceTrigger=PropertyChanged}" />
+		</Grid>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
+		<Grid Margin="0 0 0 14">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="120" />
+			</Grid.ColumnDefinitions>
+			<StackPanel>
+				<TextBlock Text="Cadence limit" FontWeight="SemiBold" />
+				<TextBlock Text="Percent of the cadence ceiling. Lower values make assist taper sooner at higher pedaling cadence."
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   TextWrapping="Wrap"
+						   Margin="0 3 18 0" />
+			</StackPanel>
+			<TextBox Grid.Column="1" Text="{Binding MaxCadencePercent, UpdateSourceTrigger=PropertyChanged}" />
+		</Grid>
 
-		<TextBlock Grid.Column="0" Grid.Row="0" Text="Variant:" VerticalAlignment="Center" Margin="0 10 0 0" />
-		<ComboBox Grid.Column="1" Grid.Row="0" Margin="10 10 0 0" ItemsSource="{Binding AssistPasVariantOptions}" SelectedValue="{Binding SelectedPasVariant, UpdateSourceTrigger=PropertyChanged}" />
+		<Grid Margin="0 0 0 14">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="120" />
+			</Grid.ColumnDefinitions>
+			<StackPanel>
+				<TextBlock Text="Speed limit" FontWeight="SemiBold" />
+				<TextBlock Text="Percent of the global max speed for this assist level."
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   TextWrapping="Wrap"
+						   Margin="0 3 18 0" />
+			</StackPanel>
+			<TextBox Grid.Column="1" Text="{Binding MaxSpeedPercent, UpdateSourceTrigger=PropertyChanged}" />
+		</Grid>
 
-		<TextBlock Grid.Column="0" Grid.Row="2" Text="Max Current (%):" VerticalAlignment="Center" Margin="0 8 0 0" />
-		<TextBox Grid.Column="1" Grid.Row="2" Margin="10 8 0 0" Text="{Binding TargetCurrentPercent, UpdateSourceTrigger=PropertyChanged}" />
-
-		<TextBlock Grid.Column="0" Grid.Row="3" Text="Max Cadence (%):" VerticalAlignment="Center" Margin="0 8 0 0" />
-		<TextBox Grid.Column="1" Grid.Row="3" Margin="10 8 0 0" Text="{Binding MaxCadencePercent, UpdateSourceTrigger=PropertyChanged}" />
-
-		<TextBlock Grid.Column="0" Grid.Row="4" Text="Max Speed (%):" VerticalAlignment="Center" Margin="0 8 0 0" />
-		<TextBox Grid.Column="1" Grid.Row="4" Margin="10 8 0 0" Text="{Binding MaxSpeedPercent, UpdateSourceTrigger=PropertyChanged}" />
-
-
-		<TextBlock Grid.Column="0" Grid.Row="5" Text="Enable Throttle:" VerticalAlignment="Center" Margin="0 16 0 0">
-			<TextBlock.ToolTip>
-				<TextBlock Width="300" TextWrapping="Wrap">
-					Allow the use of throttle while in this assist level.
-				</TextBlock>
-			</TextBlock.ToolTip>
-			<TextBlock.Style>
-				<Style TargetType="{x:Type TextBlock}">
+		<StackPanel>
+			<StackPanel.Style>
+				<Style TargetType="{x:Type StackPanel}">
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
 							<Setter Property="Visibility" Value="Collapsed" />
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
-			</TextBlock.Style>
-		</TextBlock>
-		<CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding IsThrottleEnabled}" Margin="9 16 0 0">
-			<CheckBox.Style>
-				<Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-							<Setter Property="Visibility" Value="Collapsed" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</CheckBox.Style>
-		</CheckBox>
+			</StackPanel.Style>
 
-		<TextBlock Grid.Column="0" Grid.Row="6" Text="Throttle Overrides:" VerticalAlignment="Center" Margin="0 8 0 0">
-			<TextBlock.Style>
-				<Style TargetType="{x:Type TextBlock}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-							<Setter Property="Visibility" Value="Collapsed" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</TextBlock.Style>
-		</TextBlock>
+			<CheckBox Content="Allow throttle in this assist level"
+					  IsChecked="{Binding IsThrottleEnabled}"
+					  Margin="0 0 0 8" />
+			<TextBlock Text="Throttle will still obey the throttle current and override settings below."
+					   Foreground="{DynamicResource MutedTextBrush}"
+					   TextWrapping="Wrap"
+					   Margin="0 0 0 14" />
 
-		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6" >
-			<CheckBox Content="Cadence" IsChecked="{Binding IsThrottleCadenceOverrideEnabled}" Margin="9 8 0 0">
-				<CheckBox.ToolTip>
-					<TextBlock Width="300" TextWrapping="Wrap">
-					Override configured assist level cadence limit to 100% when power
-					requested by throttle action surpasses power set by pedal assist level.
-					</TextBlock>
-				</CheckBox.ToolTip>
-				<CheckBox.Style>
-					<Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding IsThrottleEnabled}" Value="False">
-								<Setter Property="IsEnabled" Value="False" />
-							</DataTrigger>
-							<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-								<Setter Property="Visibility" Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</CheckBox.Style>
-			</CheckBox>
+			<Grid Margin="0 0 0 14">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="120" />
+				</Grid.ColumnDefinitions>
+				<StackPanel>
+					<TextBlock Text="Throttle current" FontWeight="SemiBold" />
+					<TextBlock Text="Percent of global max current allowed when using throttle in this assist level."
+							   Foreground="{DynamicResource MutedTextBrush}"
+							   TextWrapping="Wrap"
+							   Margin="0 3 18 0" />
+				</StackPanel>
+				<TextBox Grid.Column="1" Text="{Binding MaxThrottlePercent, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsThrottleEnabled}" />
+			</Grid>
 
-			<CheckBox Content="Speed" IsChecked="{Binding IsThrottleSpeedOverrideEnabled}" Margin="16 8 0 0">
-				<CheckBox.ToolTip>
-					<TextBlock Width="300" TextWrapping="Wrap">
-					Override configured assist level speed limit to 100% when power
-					requested by throttle action surpasses power set by pedal assist level.
-					</TextBlock>
-				</CheckBox.ToolTip>
-				<CheckBox.Style>
-					<Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding IsThrottleEnabled}" Value="False">
-								<Setter Property="IsEnabled" Value="False" />
-							</DataTrigger>
-							<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-								<Setter Property="Visibility" Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</CheckBox.Style>
-			</CheckBox>
+			<TextBlock Text="Throttle overrides" FontWeight="SemiBold" />
+			<TextBlock Text="When throttle asks for more power than pedal assist, these can lift cadence or speed limits to avoid the throttle feeling capped."
+					   Foreground="{DynamicResource MutedTextBrush}"
+					   TextWrapping="Wrap"
+					   Margin="0 3 0 8" />
+			<StackPanel Orientation="Horizontal">
+				<CheckBox Content="Cadence override" IsChecked="{Binding IsThrottleCadenceOverrideEnabled}" IsEnabled="{Binding IsThrottleEnabled}" Margin="0 0 18 0" />
+				<CheckBox Content="Speed override" IsChecked="{Binding IsThrottleSpeedOverrideEnabled}" IsEnabled="{Binding IsThrottleEnabled}" />
+			</StackPanel>
 		</StackPanel>
-		
-		
-		<TextBlock Grid.Column="0" Grid.Row="7" Text="Max Throttle Current (%):" VerticalAlignment="Center" Margin="0 8 0 0">
-			<TextBlock.Style>
-				<Style TargetType="{x:Type TextBlock}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-							<Setter Property="Visibility" Value="Collapsed" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</TextBlock.Style>
-		</TextBlock>
-		<TextBox Grid.Column="1" Grid.Row="7" Margin="10 8 0 0" Text="{Binding MaxThrottlePercent, UpdateSourceTrigger=PropertyChanged}">
-			<TextBox.Style>
-				<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsThrottleEnabled}" Value="False">
-							<Setter Property="IsEnabled" Value="False" />
-						</DataTrigger>
-						<DataTrigger Binding="{Binding IsPasAssistVariableVariant}" Value="True">
-							<Setter Property="Visibility" Value="Collapsed" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</TextBox.Style>
-		</TextBox>
-
-	</Grid>
+	</StackPanel>
 </UserControl>

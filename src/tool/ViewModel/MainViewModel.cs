@@ -11,6 +11,15 @@ namespace BBSFW.ViewModel
 
 	public class MainViewModel : ObservableObject
 	{
+		public enum ConfiguratorMode
+		{
+			Easy,
+			Pro
+		}
+
+		private ConfiguratorMode _mode = ConfiguratorMode.Easy;
+
+		public string AppVersion { get; } = GetAppVersion();
 
 		public ConfigurationViewModel ConfigVm { get; private set; }
 
@@ -64,6 +73,55 @@ namespace BBSFW.ViewModel
 		public ICommand ShowAboutCommand
 		{
 			get { return new DelegateCommand(OnShowAbout); }
+		}
+
+		public ICommand UseEasyModeCommand
+		{
+			get { return new DelegateCommand(() => SetMode(ConfiguratorMode.Easy)); }
+		}
+
+		public ICommand UseProModeCommand
+		{
+			get { return new DelegateCommand(() => SetMode(ConfiguratorMode.Pro)); }
+		}
+
+		public ICommand ApplyLegalPresetCommand
+		{
+			get { return new DelegateCommand(ConfigVm.ApplyLegalPreset); }
+		}
+
+		public ICommand ApplyBalancedPresetCommand
+		{
+			get { return new DelegateCommand(ConfigVm.ApplyBalancedPreset); }
+		}
+
+		public ICommand ApplyOpenPresetCommand
+		{
+			get { return new DelegateCommand(ConfigVm.ApplyOpenPreset); }
+		}
+
+		public bool IsEasyMode
+		{
+			get { return _mode == ConfiguratorMode.Easy; }
+			set
+			{
+				if (value)
+				{
+					SetMode(ConfiguratorMode.Easy);
+				}
+			}
+		}
+
+		public bool IsProMode
+		{
+			get { return _mode == ConfiguratorMode.Pro; }
+			set
+			{
+				if (value)
+				{
+					SetMode(ConfiguratorMode.Pro);
+				}
+			}
 		}
 
 
@@ -238,12 +296,39 @@ namespace BBSFW.ViewModel
 
 		private void OnShowAbout()
 		{
-			var version = Assembly.GetExecutingAssembly().GetName().Version;
 			MessageBox.Show(
-				$"Version: {version.Major}.{version.Minor}.{version.Build}\nOriginal author: Daniel Nilsson\nContinued by: He You Ma",
+				$"Version: {AppVersion}\nOriginal author: Daniel Nilsson\nContinued by: He You Ma",
 				"BBS-FW Tool",
 				MessageBoxButton.OK,
 				MessageBoxImage.Information);
+		}
+
+		private static string GetAppVersion()
+		{
+			var informationalVersion = Assembly.GetExecutingAssembly()
+				.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+				.InformationalVersion;
+
+			if (!string.IsNullOrWhiteSpace(informationalVersion))
+			{
+				var metadataStart = informationalVersion.IndexOf('+');
+				return metadataStart > 0 ? informationalVersion.Substring(0, metadataStart) : informationalVersion;
+			}
+
+			var version = Assembly.GetExecutingAssembly().GetName().Version;
+			return version == null ? "2.0.0" : $"{version.Major}.{version.Minor}.{version.Build}";
+		}
+
+		private void SetMode(ConfiguratorMode mode)
+		{
+			if (_mode == mode)
+			{
+				return;
+			}
+
+			_mode = mode;
+			OnPropertyChanged(nameof(IsEasyMode));
+			OnPropertyChanged(nameof(IsProMode));
 		}
 
 		private void OnExit()

@@ -12,17 +12,67 @@
         MinHeight="700"
         MinWidth="1020"
         WindowStartupLocation="CenterScreen"
+        Icon="/Assets/AppIcon.ico"
         Background="{DynamicResource AppBackgroundBrush}">
 
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+		<Style x:Key="ModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButtonStyle}">
+			<Setter Property="MinWidth" Value="86" />
+			<Setter Property="Height" Value="32" />
+			<Setter Property="Margin" Value="0 0 8 0" />
+		</Style>
+
+		<Style x:Key="EasyModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ModeButtonStyle}">
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding IsEasyMode}" Value="True">
+					<Setter Property="Foreground" Value="White" />
+					<Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+					<Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+
+		<Style x:Key="ProModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ModeButtonStyle}">
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding IsProMode}" Value="True">
+					<Setter Property="Foreground" Value="White" />
+					<Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+					<Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
 	</Window.Resources>
 
 	<Window.DataContext>
 		<vm:MainViewModel />
 	</Window.DataContext>
 
-	<Grid>
+	<Grid x:Name="RootShell" Opacity="0">
+		<Grid.RenderTransform>
+			<TranslateTransform x:Name="RootShellMotion" Y="14" />
+		</Grid.RenderTransform>
+		<Grid.Triggers>
+			<EventTrigger RoutedEvent="Loaded">
+				<BeginStoryboard>
+					<Storyboard>
+						<DoubleAnimation Storyboard.TargetName="RootShell"
+										 Storyboard.TargetProperty="Opacity"
+										 From="0"
+										 To="1"
+										 Duration="0:0:0.28" />
+						<DoubleAnimation Storyboard.TargetName="RootShellMotion"
+										 Storyboard.TargetProperty="Y"
+										 From="14"
+										 To="0"
+										 Duration="0:0:0.34"
+										 DecelerationRatio="0.7" />
+					</Storyboard>
+				</BeginStoryboard>
+			</EventTrigger>
+		</Grid.Triggers>
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -33,8 +83,10 @@
 		<Border Grid.Row="0"
 				Background="{DynamicResource HeaderGradientBrush}"
 				BorderBrush="{DynamicResource HeaderStrokeBrush}"
-				BorderThickness="0 0 0 1"
-				Padding="28 22">
+				BorderThickness="1"
+				CornerRadius="8"
+				Margin="18 18 18 0"
+				Padding="24 20">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
@@ -42,16 +94,19 @@
 				</Grid.ColumnDefinitions>
 
 				<StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-					<Border Width="52"
-							Height="52"
-							CornerRadius="8"
-							Background="{DynamicResource LogoGradientBrush}">
-						<TextBlock Text="B"
-								   FontSize="27"
-								   FontWeight="Bold"
-								   Foreground="{DynamicResource LogoTextBrush}"
-								   HorizontalAlignment="Center"
-								   VerticalAlignment="Center" />
+					<Border Width="54"
+							Height="54"
+							CornerRadius="14"
+							Background="#18FFFFFF"
+							BorderBrush="#33FFFFFF"
+							BorderThickness="1">
+						<Image Source="/Assets/AppIcon.ico"
+							   Width="42"
+							   Height="42"
+							   Stretch="Uniform"
+							   RenderOptions.BitmapScalingMode="HighQuality"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center" />
 					</Border>
 					<StackPanel Margin="16 0 0 0" VerticalAlignment="Center">
 						<TextBlock Text="BBS-FW Tool"
@@ -82,7 +137,15 @@
 								   VerticalAlignment="Center"
 								   FontWeight="SemiBold" />
 					</Border>
-					<Border Style="{StaticResource ShellPillStyle}">
+					<Border Style="{StaticResource ShellPillStyle}"
+							Visibility="{Binding ConnectionVm.IsDisconnected, Converter={StaticResource BoolToVis}}">
+						<TextBlock Foreground="{DynamicResource HeaderMutedTextBrush}" VerticalAlignment="Center">
+							<Run Text="App " />
+							<Run Text="{Binding AppVersion, Mode=OneWay}" FontWeight="SemiBold" />
+						</TextBlock>
+					</Border>
+					<Border Style="{StaticResource ShellPillStyle}"
+							Visibility="{Binding ConnectionVm.IsConnected, Converter={StaticResource BoolToVis}}">
 						<TextBlock Foreground="{DynamicResource HeaderMutedTextBrush}" VerticalAlignment="Center">
 							<Run Text="{DynamicResource Loc.Status.Firmware}" />
 							<Run Text="{Binding ConnectionVm.FirmwareVersion, Mode=OneWay}" FontWeight="SemiBold" />
@@ -93,10 +156,12 @@
 		</Border>
 
 		<Border Grid.Row="1"
-				Background="{DynamicResource SurfaceBrush}"
+				Background="{DynamicResource SurfaceElevatedBrush}"
 				BorderBrush="{DynamicResource BorderBrush}"
-				BorderThickness="0 0 0 1">
-			<Grid Margin="24 10">
+				BorderThickness="1"
+				CornerRadius="8"
+				Margin="18 12 18 0">
+			<Grid Margin="16 10">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
@@ -137,17 +202,63 @@
 									  IsCheckable="True"
 									  Click="NorwegianMenuItem_Click" />
 						</MenuItem>
-						<MenuItem x:Name="DarkModeMenuItem"
-								  Header="{DynamicResource Loc.Menu.DarkMode}"
-								  IsCheckable="True"
-								  Click="ToggleTheme_Click" />
+						<MenuItem Header="Theme">
+							<MenuItem x:Name="PurpleThemeMenuItem"
+									  Header="Purple"
+									  IsCheckable="True"
+									  Click="PurpleThemeMenuItem_Click" />
+							<MenuItem x:Name="BlueThemeMenuItem"
+									  Header="Blue"
+									  IsCheckable="True"
+									  Click="BlueThemeMenuItem_Click" />
+							<MenuItem x:Name="RedThemeMenuItem"
+									  Header="Red"
+									  IsCheckable="True"
+									  Click="RedThemeMenuItem_Click" />
+							<MenuItem x:Name="TealThemeMenuItem"
+									  Header="Teal"
+									  IsCheckable="True"
+									  Click="TealThemeMenuItem_Click" />
+							<Separator />
+							<MenuItem x:Name="DarkModeMenuItem"
+									  Header="{DynamicResource Loc.Menu.DarkMode}"
+									  IsCheckable="True"
+									  Click="ToggleTheme_Click" />
+						</MenuItem>
 					</MenuItem>
 					<MenuItem Header="{DynamicResource Loc.Menu.Help}" VerticalContentAlignment="Center">
 						<MenuItem Header="{DynamicResource Loc.Menu.About}" Command="{Binding ShowAboutCommand}" />
 					</MenuItem>
 				</Menu>
 
+				<StackPanel Grid.Column="1"
+							Orientation="Horizontal"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center">
+					<TextBlock Text="{DynamicResource Loc.Mode.Label}"
+							   Foreground="{DynamicResource MutedTextBrush}"
+							   FontWeight="SemiBold"
+							   VerticalAlignment="Center"
+							   Margin="0 0 10 0" />
+					<Button Content="{DynamicResource Loc.Mode.Easy}"
+							Style="{StaticResource EasyModeButtonStyle}"
+							Click="UseEasyMode_Click" />
+					<Button Content="{DynamicResource Loc.Mode.Pro}"
+							Style="{StaticResource ProModeButtonStyle}"
+							Click="UseProMode_Click" />
+				</StackPanel>
+
 				<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+					<Button Content="{DynamicResource Loc.Menu.Read}"
+							Width="88"
+							Command="{Binding ReadFlashCommand}"
+							IsEnabled="{Binding ConnectionVm.IsConnected}"
+							Margin="0 0 8 0" />
+					<Button Content="{DynamicResource Loc.Menu.Write}"
+							Width="88"
+							Command="{Binding WriteFlashCommand}"
+							IsEnabled="{Binding ConnectionVm.IsConnected}"
+							Margin="0 0 8 0" />
 					<Button x:Name="ThemeToggleButton"
 							Style="{StaticResource SecondaryButtonStyle}"
 							Width="118"
@@ -156,29 +267,44 @@
 			</Grid>
 		</Border>
 
-		<TabControl Grid.Row="2" Margin="24 22 24 22" TabStripPlacement="Left">
-			<TabItem Header="{DynamicResource Loc.Tab.Connection}">
+		<TabControl x:Name="MainTabs" Grid.Row="2" Margin="18 18 18 18" TabStripPlacement="Top">
+			<TabItem x:Name="WelcomeTab" Header="{DynamicResource Loc.Tab.Welcome}">
+				<vw:WelcomeView />
+			</TabItem>
+			<TabItem Header="{DynamicResource Loc.Tab.EasySetup}"
+					 x:Name="EasySetupTab"
+					 Visibility="{Binding IsEasyMode, Converter={StaticResource BoolToVis}}">
+				<vw:EasySetupView />
+			</TabItem>
+			<TabItem x:Name="ConnectionTab" Header="{DynamicResource Loc.Tab.Connection}">
 				<vw:ConnectionView DataContext="{Binding ConnectionVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.System}">
+			<TabItem Header="{DynamicResource Loc.Tab.System}"
+					 x:Name="SystemTab"
+					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
 				<vw:SystemView />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.AssistLevels}">
+			<TabItem Header="{DynamicResource Loc.Tab.AssistLevels}"
+					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
 				<vw:AssistLevelsView DataContext="{Binding AssistLevelsVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.Calibration}" DataContext="{Binding CalibrationVm}">
-				<vw:CalibrationView />
+			<TabItem Header="{DynamicResource Loc.Tab.Calibration}"
+					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+				<vw:CalibrationView DataContext="{Binding CalibrationVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.EventLog}" DataContext="{Binding EventLogVm}">
-				<vw:EventLogView />
+			<TabItem Header="{DynamicResource Loc.Tab.EventLog}"
+					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+				<vw:EventLogView DataContext="{Binding EventLogVm}" />
 			</TabItem>
 		</TabControl>
 
 		<Border Grid.Row="3"
 				Background="{DynamicResource SurfaceBrush}"
 				BorderBrush="{DynamicResource BorderBrush}"
-				BorderThickness="0 1 0 0"
-				Padding="24 9">
+				BorderThickness="1"
+				CornerRadius="8"
+				Margin="18 0 18 18"
+				Padding="18 10">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
@@ -193,7 +319,18 @@
 				<TextBlock Grid.Column="1"
 						   HorizontalAlignment="Center"
 						   Foreground="{DynamicResource MutedTextBrush}"
-						   VerticalAlignment="Center">
+						   VerticalAlignment="Center"
+						   Visibility="{Binding ConnectionVm.IsDisconnected, Converter={StaticResource BoolToVis}}">
+					<Run Text="BBS-FW Tool " />
+					<Run Text="{Binding AppVersion, Mode=OneWay}" />
+					<Run Text=" | Ready for BBSHD and BBS02B" />
+				</TextBlock>
+
+				<TextBlock Grid.Column="1"
+						   HorizontalAlignment="Center"
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   VerticalAlignment="Center"
+						   Visibility="{Binding ConnectionVm.IsConnected, Converter={StaticResource BoolToVis}}">
 					<Run Text="{DynamicResource Loc.Status.ConfigVersion}" />
 					<Run Text="{Binding ConnectionVm.ConfigVersion, Mode=OneWay}" />
 					<Run Text="{DynamicResource Loc.Status.Controller}" />

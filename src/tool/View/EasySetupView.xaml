@@ -1,0 +1,420 @@
+<UserControl x:Class="BBSFW.View.EasySetupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="650"
+             d:DesignWidth="920">
+
+	<UserControl.Resources>
+		<BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+		<Style x:Key="PanelStyle" TargetType="{x:Type Border}">
+			<Setter Property="Background" Value="{DynamicResource SurfaceElevatedBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="8" />
+			<Setter Property="Padding" Value="20" />
+			<Setter Property="Margin" Value="0 0 0 16" />
+		</Style>
+
+		<Style x:Key="SettingRowStyle" TargetType="{x:Type Border}">
+			<Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="8" />
+			<Setter Property="Padding" Value="14" />
+			<Setter Property="Margin" Value="0 0 0 10" />
+		</Style>
+
+		<Style x:Key="PresetCardStyle" TargetType="{x:Type Border}">
+			<Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="8" />
+			<Setter Property="Padding" Value="18" />
+			<Setter Property="Margin" Value="0 0 12 0" />
+		</Style>
+	</UserControl.Resources>
+
+	<Grid x:Name="EasyRoot" Opacity="0">
+		<Grid.RenderTransform>
+			<TranslateTransform x:Name="EasyMotion" Y="18" />
+		</Grid.RenderTransform>
+		<Grid.Triggers>
+			<EventTrigger RoutedEvent="Loaded">
+				<BeginStoryboard>
+					<Storyboard>
+						<DoubleAnimation Storyboard.TargetName="EasyRoot"
+										 Storyboard.TargetProperty="Opacity"
+										 From="0"
+										 To="1"
+										 Duration="0:0:0.30" />
+						<DoubleAnimation Storyboard.TargetName="EasyMotion"
+										 Storyboard.TargetProperty="Y"
+										 From="18"
+										 To="0"
+										 Duration="0:0:0.34"
+										 DecelerationRatio="0.72" />
+					</Storyboard>
+				</BeginStoryboard>
+			</EventTrigger>
+		</Grid.Triggers>
+
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  HorizontalScrollBarVisibility="Disabled">
+			<StackPanel>
+				<Grid Margin="0 0 0 18">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+						<ColumnDefinition Width="0.85*" />
+					</Grid.ColumnDefinitions>
+
+					<Border Grid.Column="0"
+							Background="{DynamicResource HeaderGradientBrush}"
+							BorderBrush="{DynamicResource HeaderStrokeBrush}"
+							BorderThickness="1"
+							CornerRadius="8"
+							Padding="24">
+						<StackPanel>
+							<TextBlock Text="Easy setup"
+									   Foreground="{DynamicResource HeaderMutedTextBrush}"
+									   FontWeight="SemiBold" />
+							<TextBlock Text="Tune the bike without editing every firmware field"
+									   Foreground="{DynamicResource HeaderTextBrush}"
+									   FontSize="26"
+									   FontWeight="SemiBold"
+									   TextWrapping="Wrap"
+									   Margin="0 6 0 8" />
+							<TextBlock Text="Choose a preset, check the important values, then write when ready."
+									   Foreground="{DynamicResource HeaderMutedTextBrush}"
+									   TextWrapping="Wrap"
+									   MaxWidth="620" />
+						</StackPanel>
+					</Border>
+
+					<Border Grid.Column="2" Style="{StaticResource PanelStyle}" Margin="0">
+						<StackPanel>
+							<TextBlock Text="Before writing"
+									   FontSize="18"
+									   FontWeight="SemiBold" />
+							<TextBlock Text="Read first when possible. Check battery voltage and wheel size before writing."
+									   Foreground="{DynamicResource MutedTextBrush}"
+									   TextWrapping="Wrap"
+									   Margin="0 6 0 16" />
+							<StackPanel Orientation="Horizontal">
+								<Button Content="Read"
+										Width="88"
+										Command="{Binding ReadFlashCommand}"
+										IsEnabled="{Binding ConnectionVm.IsConnected}"
+										Margin="0 0 8 0" />
+								<Button Content="Write"
+										Width="88"
+										Command="{Binding WriteFlashCommand}"
+										IsEnabled="{Binding ConnectionVm.IsConnected}" />
+							</StackPanel>
+						</StackPanel>
+					</Border>
+				</Grid>
+
+				<TextBlock Text="Presets"
+						   FontSize="20"
+						   FontWeight="SemiBold"
+						   Margin="0 0 0 12" />
+
+				<UniformGrid Columns="3" Margin="0 0 0 20">
+					<Border Style="{StaticResource PresetCardStyle}">
+						<StackPanel>
+							<TextBlock Text="Legal 25 km/h"
+									   FontSize="16"
+									   FontWeight="SemiBold" />
+							<TextBlock Text="Conservative current, 25 km/h hard cutoff, and throttle speed limiting."
+									   Foreground="{DynamicResource MutedTextBrush}"
+									   TextWrapping="Wrap"
+									   Margin="0 6 0 14" />
+							<Button Content="Apply preset"
+									Command="{Binding ApplyLegalPresetCommand}" />
+						</StackPanel>
+					</Border>
+
+					<Border Style="{StaticResource PresetCardStyle}">
+						<StackPanel>
+							<TextBlock Text="Balanced ride"
+									   FontSize="16"
+									   FontWeight="SemiBold" />
+							<TextBlock Text="Moderate current, smoother ramp, normal assist levels, and throttle allowed inside each assist level."
+									   Foreground="{DynamicResource MutedTextBrush}"
+									   TextWrapping="Wrap"
+									   Margin="0 6 0 14" />
+							<Button Content="Apply preset"
+									Command="{Binding ApplyBalancedPresetCommand}" />
+						</StackPanel>
+					</Border>
+
+					<Border Style="{StaticResource PresetCardStyle}">
+						<StackPanel>
+							<TextBlock Text="Open tuning base"
+									   FontSize="16"
+									   FontWeight="SemiBold" />
+							<TextBlock Text="Higher current and speed values for private-road use."
+									   Foreground="{DynamicResource MutedTextBrush}"
+									   TextWrapping="Wrap"
+									   Margin="0 6 0 14" />
+							<Button Content="Apply preset"
+									Command="{Binding ApplyOpenPresetCommand}" />
+						</StackPanel>
+					</Border>
+				</UniformGrid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Grid.Column="0">
+						<Border Style="{StaticResource PanelStyle}">
+							<StackPanel>
+								<TextBlock Text="Speed and power"
+										   FontSize="20"
+										   FontWeight="SemiBold" />
+								<TextBlock Text="These settings decide the basic legal and mechanical envelope of the bike."
+										   Foreground="{DynamicResource MutedTextBrush}"
+										   TextWrapping="Wrap"
+										   Margin="0 4 0 16" />
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Maximum speed" FontWeight="SemiBold" />
+											<TextBlock Text="This fork treats the configured speed as the hard cutoff endpoint. Above it, motor current is cut."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.MaxSpeedKph, UpdateSourceTrigger=PropertyChanged}"
+												 Visibility="{Binding ConfigVm.UseMetricUnits, Converter={StaticResource BoolToVis}}" />
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.MaxSpeedMph, UpdateSourceTrigger=PropertyChanged}"
+												 Visibility="{Binding ConfigVm.UseImperialUnits, Converter={StaticResource BoolToVis}}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Maximum current" FontWeight="SemiBold" />
+											<TextBlock Text="Main power ceiling. Lower values run cooler and are easier on the controller, battery, and drivetrain."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.MaxCurrentAmps, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Current ramp" FontWeight="SemiBold" />
+											<TextBlock Text="How quickly current is allowed to rise. A slower ramp feels smoother and reduces drivetrain shock."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.CurrentRampAmpsSecond, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Low voltage cutoff" FontWeight="SemiBold" />
+											<TextBlock Text="Battery protection threshold. Set this for the battery pack, not for the motor."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.LowCutoffVolts, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+								</Border>
+							</StackPanel>
+						</Border>
+					</StackPanel>
+
+					<StackPanel Grid.Column="2">
+						<Border Style="{StaticResource PanelStyle}">
+							<StackPanel>
+								<TextBlock Text="Bike hardware"
+										   FontSize="20"
+										   FontWeight="SemiBold" />
+								<TextBlock Text="Match these to the parts installed on the bike."
+										   Foreground="{DynamicResource MutedTextBrush}"
+										   TextWrapping="Wrap"
+										   Margin="0 4 0 16" />
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="150" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Display" FontWeight="SemiBold" />
+											<TextBlock Text="Use P850C or Other displays for normal behavior. Use 860C only when that display forces ECO or Sport mode."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<ComboBox Grid.Column="1"
+												  ItemsSource="{Binding ConfigVm.DisplayTypeOptions}"
+												  SelectedItem="{Binding ConfigVm.Display, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Wheel size" FontWeight="SemiBold" />
+											<TextBlock Text="Used for speed calculation. If this is wrong, speed limit and display speed are wrong."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.WheelSizeInch, UpdateSourceTrigger=LostFocus}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="110" />
+										</Grid.ColumnDefinitions>
+										<StackPanel>
+											<TextBlock Text="Speed sensor signals" FontWeight="SemiBold" />
+											<TextBlock Text="Most BBS bikes use 1 magnet signal per wheel rotation."
+													   Foreground="{DynamicResource MutedTextBrush}"
+													   TextWrapping="Wrap"
+													   Margin="0 3 0 0" />
+										</StackPanel>
+										<TextBox Grid.Column="1"
+												 Text="{Binding ConfigVm.SpeedSensorSignals, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<StackPanel>
+										<CheckBox Content="Use speed sensor"
+												  IsChecked="{Binding ConfigVm.UseSpeedSensor, UpdateSourceTrigger=PropertyChanged}" />
+										<TextBlock Text="Required for road-speed limits and speed display."
+												   Foreground="{DynamicResource MutedTextBrush}"
+												   TextWrapping="Wrap"
+												   Margin="0 3 0 0" />
+									</StackPanel>
+								</Border>
+
+								<Border Style="{StaticResource SettingRowStyle}">
+									<StackPanel>
+										<CheckBox Content="Use shift sensor"
+												  IsChecked="{Binding ConfigVm.UseShiftSensor, UpdateSourceTrigger=PropertyChanged}"
+												  IsEnabled="{Binding ConfigVm.IsShiftSensorSupported}" />
+										<TextBlock Text="Cuts power briefly during gear shifts to reduce chain and cassette stress."
+												   Foreground="{DynamicResource MutedTextBrush}"
+												   TextWrapping="Wrap"
+												   Margin="0 3 0 0" />
+									</StackPanel>
+								</Border>
+							</StackPanel>
+						</Border>
+					</StackPanel>
+				</Grid>
+
+				<Border Style="{StaticResource PanelStyle}">
+					<StackPanel>
+						<TextBlock Text="Assist feel"
+								   FontSize="20"
+								   FontWeight="SemiBold" />
+						<TextBlock Text="These keep the first ride predictable without exposing every assist-level cell."
+								   Foreground="{DynamicResource MutedTextBrush}"
+								   TextWrapping="Wrap"
+								   Margin="0 4 0 16" />
+
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<Border Grid.Column="0" Style="{StaticResource SettingRowStyle}" Margin="0">
+								<StackPanel>
+									<TextBlock Text="Startup assist level" FontWeight="SemiBold" />
+									<TextBlock Text="The assist level selected when the display powers on."
+											   Foreground="{DynamicResource MutedTextBrush}"
+											   TextWrapping="Wrap"
+											   Margin="0 3 0 10" />
+									<ComboBox ItemsSource="{Binding ConfigVm.StartupAssistLevelOptions}"
+											  SelectedValue="{Binding ConfigVm.StartupAssistLevel}" />
+								</StackPanel>
+							</Border>
+
+							<Border Grid.Column="2" Style="{StaticResource SettingRowStyle}" Margin="0">
+								<StackPanel>
+									<TextBlock Text="PAS start delay" FontWeight="SemiBold" />
+									<TextBlock Text="How much crank movement is needed before pedal assist starts."
+											   Foreground="{DynamicResource MutedTextBrush}"
+											   TextWrapping="Wrap"
+											   Margin="0 3 0 10" />
+									<ComboBox ItemsSource="{Binding ConfigVm.PasStartDelayOptions}"
+											  SelectedItem="{Binding ConfigVm.PasStartDelayDegrees}" />
+								</StackPanel>
+							</Border>
+
+							<Border Grid.Column="4" Style="{StaticResource SettingRowStyle}" Margin="0">
+								<StackPanel>
+									<TextBlock Text="Keep current" FontWeight="SemiBold" />
+									<TextBlock Text="How much current remains after cadence reaches the level target."
+											   Foreground="{DynamicResource MutedTextBrush}"
+											   TextWrapping="Wrap"
+											   Margin="0 3 0 10" />
+									<TextBox Text="{Binding ConfigVm.PasKeepCurrentPercent, UpdateSourceTrigger=PropertyChanged}" />
+								</StackPanel>
+							</Border>
+						</Grid>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

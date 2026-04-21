@@ -1,193 +1,253 @@
 <UserControl x:Class="BBSFW.View.AssistLevelsView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:vm="clr-namespace:BBSFW.ViewModel"
 	xmlns:local="clr-namespace:BBSFW.View"
-	mc:Ignorable="d" 
-	d:DesignHeight="450" d:DesignWidth="800">
+	mc:Ignorable="d"
+	d:DesignHeight="650"
+	d:DesignWidth="920">
+
+	<UserControl.Resources>
+		<Style x:Key="PanelStyle" TargetType="{x:Type Border}">
+			<Setter Property="Background" Value="{DynamicResource SurfaceElevatedBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="8" />
+			<Setter Property="Padding" Value="20" />
+		</Style>
+	</UserControl.Resources>
 
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition Width="20" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-
 		<Grid.RowDefinitions>
-			<RowDefinition />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-	
-		<Grid Grid.Column="0" Grid.Row="0">
-
+		<Grid Grid.Row="0" Margin="0 0 0 18">
 			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 
-			
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition />
-			</Grid.RowDefinitions>
+			<StackPanel>
+				<TextBlock Text="Assist profile editor"
+						   FontSize="24"
+						   FontWeight="SemiBold" />
+				<TextBlock Text="Each level controls how much current, cadence, throttle, and speed are allowed in Standard or Sport mode."
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   TextWrapping="Wrap"
+						   Margin="0 5 0 0" />
+			</StackPanel>
 
-
-			<TextBlock Grid.Column="0" Grid.Row="0" Text="Operation Mode Page:" VerticalAlignment="Center" />
-			<ComboBox Grid.Column="1" Grid.Row="0" Margin="10 0 0 0" ItemsSource="{Binding OperationModes}" SelectedValue="{Binding SelectedOperationModePage}" />
-
-			<ListView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-					  ItemsSource="{Binding ConfigVm.StandardAssistLevels}"
-					  SelectedItem="{Binding SelectedAssistLevel}" Margin="0 4 0 4">
-				<ListView.Style>
-					<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
-						<Setter Property="Visibility" Value="Collapsed" />
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding SelectedOperationModePage.Value}" Value="Standard">
-								<Setter Property="Visibility" Value="Visible" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ListView.Style>
-				
-				<ListView.ItemTemplate>
-					<DataTemplate DataType="{x:Type vm:AssistLevelViewModel}">
-						<StackPanel Orientation="Vertical">
-							<TextBlock FontWeight="Bold">
-							<Run Text="Level " />
-							<Run Text="{Binding Id, Mode=OneWay}" />
-							</TextBlock>
-
-							<TextBlock>
-							<Run Text="{Binding SelectedType, Mode=OneWay}" />
-							</TextBlock>
-						</StackPanel>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-
-			<ListView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-					  ItemsSource="{Binding ConfigVm.SportAssistLevels}"
-					  SelectedItem="{Binding SelectedAssistLevel}" Margin="0 4 0 4">
-				<ListView.Style>
-					<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
-						<Setter Property="Visibility" Value="Collapsed" />
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding SelectedOperationModePage.Value}" Value="Sport">
-								<Setter Property="Visibility" Value="Visible" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ListView.Style>
-
-				<ListView.ItemTemplate>
-					<DataTemplate DataType="{x:Type vm:AssistLevelViewModel}">
-						<StackPanel Orientation="Vertical">
-							<TextBlock FontWeight="Bold">
-							<Run Text="Level " />
-							<Run Text="{Binding Id, Mode=OneWay}" />
-							</TextBlock>
-
-							<TextBlock>
-							<Run Text="{Binding SelectedType, Mode=OneWay}" />
-							</TextBlock>
-						</StackPanel>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-		</Grid>
-		
-		<Grid Grid.Column="2" Grid.Row="0">
-
-
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-
-
-				<TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold">
-					<Run Text="Level " />
-					<Run Text="{Binding SelectedAssistLevel.Id, Mode=OneWay}" />
-				</TextBlock>
-
-				<TextBlock Grid.Column="0" Grid.Row="1" Text="Type:" VerticalAlignment="Center" Margin="0 10 0 0" />
-				<ComboBox Grid.Column="1" Grid.Row="1" Margin="10 10 0 0" ItemsSource="{Binding SelectedAssistLevel.AssistBaseTypeOptions}" SelectedValue="{Binding SelectedAssistLevel.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
-
-				<ContentControl Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding SelectedAssistLevel}">
-					<ContentControl.Resources>
-						<DataTemplate x:Key="EmptyTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
-							<Grid />
-						</DataTemplate>
-						
-						<DataTemplate x:Key="PasTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
-							<local:AssistLevelPasView />
-						</DataTemplate>
-						<DataTemplate x:Key="ThrottleTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
-							<local:AssistLevelThrottleView />
-						</DataTemplate>
-						<DataTemplate x:Key="CruiseTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
-							<local:AssistLevelCruiseView />
-						</DataTemplate>
-					</ContentControl.Resources>
-
-					<ContentControl.Style>
-						<Style TargetType="ContentControl">
-							<Setter Property="ContentTemplate" Value="{StaticResource EmptyTemplate}" />
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Pas">
-									<Setter Property="ContentTemplate" Value="{StaticResource PasTemplate}" />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Throttle">
-									<Setter Property="ContentTemplate" Value="{StaticResource ThrottleTemplate}" />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Cruise">
-									<Setter Property="ContentTemplate" Value="{StaticResource CruiseTemplate}" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</ContentControl.Style>
-				</ContentControl>
-
-			</Grid>
-
-			<Border Grid.Row="1" Background="{StaticResource BorderBrush}" Height="1" Margin="0 18" />
-
-			<Grid Grid.Row="2">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Column="0" Grid.Row="0" Text="Operation Mode Toggle:" VerticalAlignment="Center" Margin="0 4 0 0" />
-				<ComboBox Grid.Column="1" Grid.Row="0" Margin="10 4 0 0" ItemsSource="{Binding ConfigVm.AssistModeSelectOptions}" SelectedValue="{Binding ConfigVm.AssistModeSelection}" />
-
-				<TextBlock Grid.Column="0" Grid.Row="1" Text="Startup Assist Level:" VerticalAlignment="Center"  Margin="0 8 0 0" />
-				<ComboBox Grid.Column="1" Grid.Row="1" Margin="10 8 0 0" ItemsSource="{Binding ConfigVm.StartupAssistLevelOptions}" SelectedValue="{Binding ConfigVm.StartupAssistLevel}"  />
-
-			</Grid>
+			<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+				<TextBlock Text="Page"
+						   Foreground="{DynamicResource MutedTextBrush}"
+						   FontWeight="SemiBold"
+						   VerticalAlignment="Center"
+						   Margin="0 0 10 0" />
+				<ComboBox Width="150"
+						  ItemsSource="{Binding OperationModes}"
+						  SelectedValue="{Binding SelectedOperationModePage}" />
+			</StackPanel>
 		</Grid>
 
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="300" />
+				<ColumnDefinition Width="18" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Border Grid.Column="0" Style="{StaticResource PanelStyle}">
+				<DockPanel LastChildFill="True">
+					<StackPanel DockPanel.Dock="Top" Margin="0 0 0 14">
+						<TextBlock Text="Assist levels"
+								   FontSize="18"
+								   FontWeight="SemiBold" />
+						<TextBlock Text="Select a level, then tune what that level is allowed to do."
+								   Foreground="{DynamicResource MutedTextBrush}"
+								   TextWrapping="Wrap"
+								   Margin="0 4 0 0" />
+					</StackPanel>
+
+					<ListView ItemsSource="{Binding ConfigVm.StandardAssistLevels}"
+							  SelectedItem="{Binding SelectedAssistLevel}">
+						<ListView.Style>
+							<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
+								<Setter Property="Visibility" Value="Collapsed" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding SelectedOperationModePage.Value}" Value="Standard">
+										<Setter Property="Visibility" Value="Visible" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</ListView.Style>
+						<ListView.ItemTemplate>
+							<DataTemplate DataType="{x:Type vm:AssistLevelViewModel}">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="42" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+									<Border Width="30" Height="30" CornerRadius="8" Background="{DynamicResource AccentSoftBrush}">
+										<TextBlock Text="{Binding Id}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" />
+									</Border>
+									<StackPanel Grid.Column="1">
+										<TextBlock Text="{Binding SelectedType}" FontWeight="SemiBold" />
+										<TextBlock Foreground="{DynamicResource MutedTextBrush}">
+											<Run Text="Current " />
+											<Run Text="{Binding TargetCurrentPercent}" />
+											<Run Text="% | Speed " />
+											<Run Text="{Binding MaxSpeedPercent}" />
+											<Run Text="%" />
+										</TextBlock>
+									</StackPanel>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+
+					<ListView ItemsSource="{Binding ConfigVm.SportAssistLevels}"
+							  SelectedItem="{Binding SelectedAssistLevel}">
+						<ListView.Style>
+							<Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
+								<Setter Property="Visibility" Value="Collapsed" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding SelectedOperationModePage.Value}" Value="Sport">
+										<Setter Property="Visibility" Value="Visible" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</ListView.Style>
+						<ListView.ItemTemplate>
+							<DataTemplate DataType="{x:Type vm:AssistLevelViewModel}">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="42" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+									<Border Width="30" Height="30" CornerRadius="8" Background="{DynamicResource AccentSoftBrush}">
+										<TextBlock Text="{Binding Id}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" />
+									</Border>
+									<StackPanel Grid.Column="1">
+										<TextBlock Text="{Binding SelectedType}" FontWeight="SemiBold" />
+										<TextBlock Foreground="{DynamicResource MutedTextBrush}">
+											<Run Text="Current " />
+											<Run Text="{Binding TargetCurrentPercent}" />
+											<Run Text="% | Speed " />
+											<Run Text="{Binding MaxSpeedPercent}" />
+											<Run Text="%" />
+										</TextBlock>
+									</StackPanel>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+				</DockPanel>
+			</Border>
+
+			<Border Grid.Column="2" Style="{StaticResource PanelStyle}">
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
+					<StackPanel>
+						<TextBlock FontSize="20" FontWeight="SemiBold">
+							<Run Text="Level " />
+							<Run Text="{Binding SelectedAssistLevel.Id, Mode=OneWay}" />
+						</TextBlock>
+						<TextBlock Text="Choose the base behavior first. PAS is normal pedal assist, Throttle is throttle-only, Cruise is steady speed/current behavior, and Motor Disabled turns the level off."
+								   Foreground="{DynamicResource MutedTextBrush}"
+								   TextWrapping="Wrap"
+								   Margin="0 5 0 16" />
+
+						<Grid Margin="0 0 0 18">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="220" />
+							</Grid.ColumnDefinitions>
+							<StackPanel>
+								<TextBlock Text="Level type" FontWeight="SemiBold" />
+								<TextBlock Text="This decides which set of controls is active for the selected level."
+										   Foreground="{DynamicResource MutedTextBrush}"
+										   TextWrapping="Wrap"
+										   Margin="0 3 18 0" />
+							</StackPanel>
+							<ComboBox Grid.Column="1"
+									  ItemsSource="{Binding SelectedAssistLevel.AssistBaseTypeOptions}"
+									  SelectedValue="{Binding SelectedAssistLevel.SelectedType, UpdateSourceTrigger=PropertyChanged}" />
+						</Grid>
+
+						<ContentControl Content="{Binding SelectedAssistLevel}">
+							<ContentControl.Resources>
+								<DataTemplate x:Key="EmptyTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
+									<Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="18">
+										<TextBlock Text="This assist level is disabled. It will not request motor power."
+												   Foreground="{DynamicResource MutedTextBrush}"
+												   TextWrapping="Wrap" />
+									</Border>
+								</DataTemplate>
+
+								<DataTemplate x:Key="PasTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
+									<local:AssistLevelPasView />
+								</DataTemplate>
+								<DataTemplate x:Key="ThrottleTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
+									<local:AssistLevelThrottleView />
+								</DataTemplate>
+								<DataTemplate x:Key="CruiseTemplate" DataType="{x:Type vm:AssistLevelViewModel}">
+									<local:AssistLevelCruiseView />
+								</DataTemplate>
+							</ContentControl.Resources>
+
+							<ContentControl.Style>
+								<Style TargetType="ContentControl">
+									<Setter Property="ContentTemplate" Value="{StaticResource EmptyTemplate}" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Pas">
+											<Setter Property="ContentTemplate" Value="{StaticResource PasTemplate}" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Throttle">
+											<Setter Property="ContentTemplate" Value="{StaticResource ThrottleTemplate}" />
+										</DataTrigger>
+										<DataTrigger Binding="{Binding SelectedAssistLevel.SelectedType.Value}" Value="Cruise">
+											<Setter Property="ContentTemplate" Value="{StaticResource CruiseTemplate}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</ContentControl.Style>
+						</ContentControl>
+
+						<Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="18" Margin="0 22 0 0">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="18" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<StackPanel Grid.Column="0">
+									<TextBlock Text="Mode toggle" FontWeight="SemiBold" />
+									<TextBlock Text="How the controller switches between Standard and Sport assist pages."
+											   Foreground="{DynamicResource MutedTextBrush}"
+											   TextWrapping="Wrap"
+											   Margin="0 3 0 10" />
+									<ComboBox ItemsSource="{Binding ConfigVm.AssistModeSelectOptions}"
+											  SelectedValue="{Binding ConfigVm.AssistModeSelection}" />
+								</StackPanel>
+
+								<StackPanel Grid.Column="2">
+									<TextBlock Text="Startup assist" FontWeight="SemiBold" />
+									<TextBlock Text="Assist level selected at power-on."
+											   Foreground="{DynamicResource MutedTextBrush}"
+											   TextWrapping="Wrap"
+											   Margin="0 3 0 10" />
+									<ComboBox ItemsSource="{Binding ConfigVm.StartupAssistLevelOptions}"
+											  SelectedValue="{Binding ConfigVm.StartupAssistLevel}" />
+								</StackPanel>
+							</Grid>
+						</Border>
+					</StackPanel>
+				</ScrollViewer>
+			</Border>
+		</Grid>
 	</Grid>
-
-
 </UserControl>

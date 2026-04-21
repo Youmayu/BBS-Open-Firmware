@@ -2,45 +2,45 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<Application.Resources>
-		<SolidColorBrush x:Key="AppBackgroundBrush" Color="#F7F5FB" />
+		<SolidColorBrush x:Key="AppBackgroundBrush" Color="#F6F3FB" />
 		<SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
-		<SolidColorBrush x:Key="SurfaceAltBrush" Color="#EEEAF7" />
-		<SolidColorBrush x:Key="SurfaceElevatedBrush" Color="#FCFAFF" />
+		<SolidColorBrush x:Key="SurfaceAltBrush" Color="#F0ECFA" />
+		<SolidColorBrush x:Key="SurfaceElevatedBrush" Color="#FCFBFF" />
 		<SolidColorBrush x:Key="InputBrush" Color="#FFFFFF" />
-		<SolidColorBrush x:Key="TextBrush" Color="#1C1724" />
-		<SolidColorBrush x:Key="MutedTextBrush" Color="#6F667A" />
-		<SolidColorBrush x:Key="BorderBrush" Color="#D9D1E6" />
-		<SolidColorBrush x:Key="AccentBrush" Color="#7652E7" />
-		<SolidColorBrush x:Key="AccentHoverBrush" Color="#6541D2" />
+		<SolidColorBrush x:Key="TextBrush" Color="#181421" />
+		<SolidColorBrush x:Key="MutedTextBrush" Color="#5F5870" />
+		<SolidColorBrush x:Key="BorderBrush" Color="#D9D1EA" />
+		<SolidColorBrush x:Key="AccentBrush" Color="#6D4CDB" />
+		<SolidColorBrush x:Key="AccentHoverBrush" Color="#5B3CC8" />
 		<SolidColorBrush x:Key="AccentSoftBrush" Color="#ECE6FF" />
-		<SolidColorBrush x:Key="AccentStrongBrush" Color="#4E2DBD" />
-		<SolidColorBrush x:Key="LogoTextBrush" Color="#3C238F" />
-		<SolidColorBrush x:Key="HeaderTextBrush" Color="#FFFFFF" />
-		<SolidColorBrush x:Key="HeaderMutedTextBrush" Color="#EFE7FF" />
-		<SolidColorBrush x:Key="HeaderStrokeBrush" Color="#B79BFF" />
-		<SolidColorBrush x:Key="HeaderPillBrush" Color="#2D2545" />
+		<SolidColorBrush x:Key="AccentStrongBrush" Color="#4B30B2" />
+		<SolidColorBrush x:Key="LogoTextBrush" Color="#472D95" />
+		<SolidColorBrush x:Key="HeaderTextBrush" Color="#F8FAFC" />
+		<SolidColorBrush x:Key="HeaderMutedTextBrush" Color="#EEE8FF" />
+		<SolidColorBrush x:Key="HeaderStrokeBrush" Color="#A78BFA" />
+		<SolidColorBrush x:Key="HeaderPillBrush" Color="#2A2341" />
 		<SolidColorBrush x:Key="NavBackgroundBrush" Color="#FFFFFF" />
-		<SolidColorBrush x:Key="NavSelectionBrush" Color="#EFE8FF" />
+		<SolidColorBrush x:Key="NavSelectionBrush" Color="#ECE6FF" />
 		<SolidColorBrush x:Key="SuccessSoftBrush" Color="#DCFCE7" />
 		<SolidColorBrush x:Key="WarningSoftBrush" Color="#FFF1C7" />
 		<SolidColorBrush x:Key="ErrorSoftBrush" Color="#FFE1E1" />
 		<SolidColorBrush x:Key="DataGridAlternateBrush" Color="#FAF8FD" />
 
 		<LinearGradientBrush x:Key="HeaderGradientBrush" StartPoint="0,0" EndPoint="1,1">
-			<GradientStop Color="#1E1735" Offset="0" />
-			<GradientStop Color="#5B35D5" Offset="0.6" />
-			<GradientStop Color="#B86FEA" Offset="1" />
+			<GradientStop Color="#17132C" Offset="0" />
+			<GradientStop Color="#5331C6" Offset="0.6" />
+			<GradientStop Color="#8E4BE8" Offset="1" />
 		</LinearGradientBrush>
 
 		<LinearGradientBrush x:Key="LogoGradientBrush" StartPoint="0,0" EndPoint="1,1">
 			<GradientStop Color="#FFFFFF" Offset="0" />
-			<GradientStop Color="#E8DEFF" Offset="1" />
+			<GradientStop Color="#EEE6FF" Offset="1" />
 		</LinearGradientBrush>
 
 		<LinearGradientBrush x:Key="SplashGradientBrush" StartPoint="0,0" EndPoint="1,1">
-			<GradientStop Color="#1E1735" Offset="0" />
-			<GradientStop Color="#5B35D5" Offset="0.64" />
-			<GradientStop Color="#B86FEA" Offset="1" />
+			<GradientStop Color="#17132C" Offset="0" />
+			<GradientStop Color="#5331C6" Offset="0.64" />
+			<GradientStop Color="#8E4BE8" Offset="1" />
 		</LinearGradientBrush>
 
 		<Style TargetType="{x:Type Window}">
@@ -82,13 +82,45 @@
 								BorderBrush="{TemplateBinding BorderBrush}"
 								BorderThickness="{TemplateBinding BorderThickness}"
 								CornerRadius="7"
+								RenderTransformOrigin="0.5,0.5"
 								SnapsToDevicePixels="True">
+							<Border.RenderTransform>
+								<ScaleTransform x:Name="ButtonScale" ScaleX="1" ScaleY="1" />
+							</Border.RenderTransform>
 							<ContentPresenter HorizontalAlignment="Center"
 											  VerticalAlignment="Center"
 											  Margin="{TemplateBinding Padding}" />
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
+								<Trigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="ButtonScale"
+															 Storyboard.TargetProperty="ScaleX"
+															 To="1.035"
+															 Duration="0:0:0.12" />
+											<DoubleAnimation Storyboard.TargetName="ButtonScale"
+															 Storyboard.TargetProperty="ScaleY"
+															 To="1.035"
+															 Duration="0:0:0.12" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.EnterActions>
+								<Trigger.ExitActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="ButtonScale"
+															 Storyboard.TargetProperty="ScaleX"
+															 To="1"
+															 Duration="0:0:0.11" />
+											<DoubleAnimation Storyboard.TargetName="ButtonScale"
+															 Storyboard.TargetProperty="ScaleY"
+															 To="1"
+															 Duration="0:0:0.11" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.ExitActions>
 								<Setter TargetName="Chrome" Property="Background" Value="{DynamicResource AccentHoverBrush}" />
 								<Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentHoverBrush}" />
 							</Trigger>
@@ -361,45 +393,58 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TabControl}">
 						<Grid KeyboardNavigation.TabNavigation="Local">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="210" />
-								<ColumnDefinition Width="18" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-							<Border Grid.Column="0"
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<Border Grid.Row="0"
 									Background="{DynamicResource NavBackgroundBrush}"
 									BorderBrush="{DynamicResource BorderBrush}"
 									BorderThickness="1"
 									CornerRadius="8"
-									Padding="12">
-								<DockPanel>
-									<Border DockPanel.Dock="Top"
-											Height="4"
-											CornerRadius="2"
-											Background="{DynamicResource AccentBrush}"
-											Margin="4 0 4 16" />
-									<TextBlock DockPanel.Dock="Top"
-											   Text="Configuration"
-											   Foreground="{DynamicResource MutedTextBrush}"
-											   FontSize="12"
-											   FontWeight="SemiBold"
-											   Margin="4 0 0 12" />
-									<StackPanel x:Name="HeaderPanel"
-												IsItemsHost="True"
-												KeyboardNavigation.TabIndex="1" />
-								</DockPanel>
+									Padding="6"
+									Margin="0 0 0 16">
+								<TabPanel x:Name="HeaderPanel"
+										  IsItemsHost="True"
+										  KeyboardNavigation.TabIndex="1" />
 							</Border>
-							<Border Grid.Column="2"
+
+							<Border Grid.Row="1"
 									Background="{DynamicResource SurfaceBrush}"
 									BorderBrush="{DynamicResource BorderBrush}"
 									BorderThickness="1"
 									CornerRadius="8"
 									Padding="24">
 								<ScrollViewer VerticalScrollBarVisibility="Auto"
-											  HorizontalScrollBarVisibility="Auto">
+											  HorizontalScrollBarVisibility="Disabled">
 									<ContentPresenter x:Name="PART_SelectedContentHost"
 													  ContentSource="SelectedContent"
-													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+													  Opacity="0"
+													  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+										<ContentPresenter.RenderTransform>
+											<TranslateTransform x:Name="SelectedContentMotion" Y="18" />
+										</ContentPresenter.RenderTransform>
+										<ContentPresenter.Triggers>
+											<EventTrigger RoutedEvent="Loaded">
+												<BeginStoryboard>
+													<Storyboard>
+														<DoubleAnimation Storyboard.TargetName="PART_SelectedContentHost"
+																		 Storyboard.TargetProperty="Opacity"
+																		 From="0"
+																		 To="1"
+																		 Duration="0:0:0.26" />
+														<DoubleAnimation Storyboard.TargetName="SelectedContentMotion"
+																		 Storyboard.TargetProperty="Y"
+																		 From="18"
+																		 To="0"
+																		 Duration="0:0:0.30"
+																		 DecelerationRatio="0.72" />
+													</Storyboard>
+												</BeginStoryboard>
+											</EventTrigger>
+										</ContentPresenter.Triggers>
+									</ContentPresenter>
 								</ScrollViewer>
 							</Border>
 						</Grid>
@@ -411,34 +456,55 @@
 		<Style TargetType="{x:Type TabItem}">
 			<Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
 			<Setter Property="FontWeight" Value="SemiBold" />
-			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="Padding" Value="16 10" />
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TabItem}">
 						<Border x:Name="Chrome"
 								Background="Transparent"
-								CornerRadius="7"
-								Margin="0 0 0 7"
-								Padding="12 11"
+								BorderBrush="Transparent"
+								BorderThickness="1"
+								CornerRadius="8"
+								Margin="0 0 6 0"
+								Padding="{TemplateBinding Padding}"
+								RenderTransformOrigin="0.5,0.5"
 								TextElement.Foreground="{TemplateBinding Foreground}">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="4" />
-									<ColumnDefinition Width="10" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
-								<Border x:Name="Indicator" CornerRadius="2" Background="Transparent" />
-								<ContentPresenter Grid.Column="2" ContentSource="Header" />
-							</Grid>
+							<Border.RenderTransform>
+								<TranslateTransform x:Name="NavMotion" Y="0" />
+							</Border.RenderTransform>
+							<ContentPresenter ContentSource="Header"
+											  HorizontalAlignment="Center"
+											  VerticalAlignment="Center" />
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
+								<Trigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="NavMotion"
+															 Storyboard.TargetProperty="Y"
+															 To="-2"
+															 Duration="0:0:0.12" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.EnterActions>
+								<Trigger.ExitActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="NavMotion"
+															 Storyboard.TargetProperty="Y"
+															 To="0"
+															 Duration="0:0:0.12" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.ExitActions>
 								<Setter TargetName="Chrome" Property="Background" Value="{DynamicResource SurfaceAltBrush}" />
+								<Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
 							</Trigger>
 							<Trigger Property="IsSelected" Value="True">
-								<Setter Property="Foreground" Value="{DynamicResource AccentStrongBrush}" />
-								<Setter TargetName="Chrome" Property="Background" Value="{DynamicResource NavSelectionBrush}" />
-								<Setter TargetName="Indicator" Property="Background" Value="{DynamicResource AccentBrush}" />
+								<Setter Property="Foreground" Value="{DynamicResource HeaderTextBrush}" />
+								<Setter TargetName="Chrome" Property="Background" Value="{DynamicResource AccentBrush}" />
+								<Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
