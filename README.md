@@ -1,11 +1,8 @@
 # BBSHD/BBS02B Open Source Firmware
 
-[![Downloads](https://img.shields.io/github/downloads/Youmayu/BBS-Open-Firmware/total?style=for-the-badge&label=downloads)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
-[![Latest Release](https://img.shields.io/github/v/release/Youmayu/BBS-Open-Firmware?include_prereleases&style=for-the-badge&label=latest)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
-[![Release Date](https://img.shields.io/github/release-date-pre/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
-[![License](https://img.shields.io/github/license/Youmayu/BBS-Open-Firmware?style=for-the-badge)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/commits/main)
-[![Repo Size](https://img.shields.io/github/repo-size/Youmayu/BBS-Open-Firmware?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware)
+[![Latest Release](https://img.shields.io/badge/latest-v0.1.0--alpha-ea7233?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
+[![Release Date](https://img.shields.io/badge/release%20date-2026--04--20-999999?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
+[![License](https://img.shields.io/badge/license-GPL--3.0-ea7233?style=for-the-badge)](LICENSE)
 [![Firmware Targets](https://img.shields.io/badge/firmware-BBSHD%20%7C%20BBS02B-blue?style=for-the-badge)](#supported-hardware)
 [![Configurator](https://img.shields.io/badge/configurator-Windows%20x64-0078D4?style=for-the-badge)](#build-configuration-tool)
 
