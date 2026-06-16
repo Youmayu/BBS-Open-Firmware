@@ -1,5 +1,6 @@
 # BBSHD/BBS02B Open Source Firmware
 
+[![Downloads](https://img.shields.io/badge/downloads-7-eac900?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
 [![Latest Release](https://img.shields.io/badge/latest-v0.1.0--alpha-ea7233?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
 [![Release Date](https://img.shields.io/badge/release%20date-2026--04--20-999999?style=for-the-badge)](https://github.com/Youmayu/BBS-Open-Firmware/releases)
 [![License](https://img.shields.io/badge/license-GPL--3.0-ea7233?style=for-the-badge)](LICENSE)
