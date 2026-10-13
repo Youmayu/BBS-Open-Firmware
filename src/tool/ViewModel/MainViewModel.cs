@@ -11,7 +11,6 @@ namespace BBSFW.ViewModel
 
 	public class MainViewModel : ObservableObject
 	{
-		public string AppVersion { get; } = GetAppVersion();
 
 		public ConfigurationViewModel ConfigVm { get; private set; }
 
@@ -66,6 +65,8 @@ namespace BBSFW.ViewModel
 		{
 			get { return new DelegateCommand(OnShowAbout); }
 		}
+
+
 
 		public MainViewModel()
 		{
@@ -237,27 +238,12 @@ namespace BBSFW.ViewModel
 
 		private void OnShowAbout()
 		{
+			var version = Assembly.GetExecutingAssembly().GetName().Version;
 			MessageBox.Show(
-				$"Version: {AppVersion}\nOriginal author: Daniel Nilsson\nContinued by: He You Ma",
+				$"Version: {version.Major}.{version.Minor}.{version.Build}\nOriginal author: Daniel Nilsson\nContinued by: He You Ma",
 				"BBS-FW Tool",
 				MessageBoxButton.OK,
 				MessageBoxImage.Information);
-		}
-
-		private static string GetAppVersion()
-		{
-			var informationalVersion = Assembly.GetExecutingAssembly()
-				.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-				.InformationalVersion;
-
-			if (!string.IsNullOrWhiteSpace(informationalVersion))
-			{
-				var metadataStart = informationalVersion.IndexOf('+');
-				return metadataStart > 0 ? informationalVersion.Substring(0, metadataStart) : informationalVersion;
-			}
-
-			var version = Assembly.GetExecutingAssembly().GetName().Version;
-			return version == null ? "2.0.0" : $"{version.Major}.{version.Minor}.{version.Build}";
 		}
 
 		private void OnExit()
