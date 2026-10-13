@@ -11,14 +11,6 @@ namespace BBSFW.ViewModel
 
 	public class MainViewModel : ObservableObject
 	{
-		public enum ConfiguratorMode
-		{
-			Easy,
-			Pro
-		}
-
-		private ConfiguratorMode _mode = ConfiguratorMode.Easy;
-
 		public string AppVersion { get; } = GetAppVersion();
 
 		public ConfigurationViewModel ConfigVm { get; private set; }
@@ -74,57 +66,6 @@ namespace BBSFW.ViewModel
 		{
 			get { return new DelegateCommand(OnShowAbout); }
 		}
-
-		public ICommand UseEasyModeCommand
-		{
-			get { return new DelegateCommand(() => SetMode(ConfiguratorMode.Easy)); }
-		}
-
-		public ICommand UseProModeCommand
-		{
-			get { return new DelegateCommand(() => SetMode(ConfiguratorMode.Pro)); }
-		}
-
-		public ICommand ApplyLegalPresetCommand
-		{
-			get { return new DelegateCommand(ConfigVm.ApplyLegalPreset); }
-		}
-
-		public ICommand ApplyBalancedPresetCommand
-		{
-			get { return new DelegateCommand(ConfigVm.ApplyBalancedPreset); }
-		}
-
-		public ICommand ApplyOpenPresetCommand
-		{
-			get { return new DelegateCommand(ConfigVm.ApplyOpenPreset); }
-		}
-
-		public bool IsEasyMode
-		{
-			get { return _mode == ConfiguratorMode.Easy; }
-			set
-			{
-				if (value)
-				{
-					SetMode(ConfiguratorMode.Easy);
-				}
-			}
-		}
-
-		public bool IsProMode
-		{
-			get { return _mode == ConfiguratorMode.Pro; }
-			set
-			{
-				if (value)
-				{
-					SetMode(ConfiguratorMode.Pro);
-				}
-			}
-		}
-
-
 
 		public MainViewModel()
 		{
@@ -317,18 +258,6 @@ namespace BBSFW.ViewModel
 
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 			return version == null ? "2.0.0" : $"{version.Major}.{version.Minor}.{version.Build}";
-		}
-
-		private void SetMode(ConfiguratorMode mode)
-		{
-			if (_mode == mode)
-			{
-				return;
-			}
-
-			_mode = mode;
-			OnPropertyChanged(nameof(IsEasyMode));
-			OnPropertyChanged(nameof(IsProMode));
 		}
 
 		private void OnExit()

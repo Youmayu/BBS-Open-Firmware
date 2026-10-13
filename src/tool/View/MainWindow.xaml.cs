@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using BBSFW.ViewModel;
 
 namespace BBSFW
 {
@@ -48,49 +47,6 @@ namespace BBSFW
 			motion.BeginAnimation(
 				TranslateTransform.YProperty,
 				new DoubleAnimation(18, 0, TimeSpan.FromMilliseconds(280)) { EasingFunction = ease });
-		}
-
-		private void UseEasyMode_Click(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is MainViewModel vm)
-			{
-				vm.IsEasyMode = true;
-				EasySetupTab.IsSelected = true;
-			}
-		}
-
-		private void UseProMode_Click(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is MainViewModel vm)
-			{
-				vm.IsProMode = true;
-				SystemTab.IsSelected = true;
-			}
-		}
-
-		public void NavigateToConnection()
-		{
-			ConnectionTab.IsSelected = true;
-		}
-
-		public void NavigateToEasySetup()
-		{
-			if (DataContext is MainViewModel vm)
-			{
-				vm.IsEasyMode = true;
-			}
-
-			EasySetupTab.IsSelected = true;
-		}
-
-		public void NavigateToProSetup()
-		{
-			if (DataContext is MainViewModel vm)
-			{
-				vm.IsProMode = true;
-			}
-
-			SystemTab.IsSelected = true;
 		}
 
 		private void ToggleTheme_Click(object sender, RoutedEventArgs e)

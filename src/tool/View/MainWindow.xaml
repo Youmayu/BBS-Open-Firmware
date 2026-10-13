@@ -17,32 +17,6 @@
 
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BoolToVis" />
-
-		<Style x:Key="ModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButtonStyle}">
-			<Setter Property="MinWidth" Value="86" />
-			<Setter Property="Height" Value="32" />
-			<Setter Property="Margin" Value="0 0 8 0" />
-		</Style>
-
-		<Style x:Key="EasyModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ModeButtonStyle}">
-			<Style.Triggers>
-				<DataTrigger Binding="{Binding IsEasyMode}" Value="True">
-					<Setter Property="Foreground" Value="White" />
-					<Setter Property="Background" Value="{DynamicResource AccentBrush}" />
-					<Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-				</DataTrigger>
-			</Style.Triggers>
-		</Style>
-
-		<Style x:Key="ProModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ModeButtonStyle}">
-			<Style.Triggers>
-				<DataTrigger Binding="{Binding IsProMode}" Value="True">
-					<Setter Property="Foreground" Value="White" />
-					<Setter Property="Background" Value="{DynamicResource AccentBrush}" />
-					<Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-				</DataTrigger>
-			</Style.Triggers>
-		</Style>
 	</Window.Resources>
 
 	<Window.DataContext>
@@ -231,23 +205,6 @@
 					</MenuItem>
 				</Menu>
 
-				<StackPanel Grid.Column="1"
-							Orientation="Horizontal"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center">
-					<TextBlock Text="{DynamicResource Loc.Mode.Label}"
-							   Foreground="{DynamicResource MutedTextBrush}"
-							   FontWeight="SemiBold"
-							   VerticalAlignment="Center"
-							   Margin="0 0 10 0" />
-					<Button Content="{DynamicResource Loc.Mode.Easy}"
-							Style="{StaticResource EasyModeButtonStyle}"
-							Click="UseEasyMode_Click" />
-					<Button Content="{DynamicResource Loc.Mode.Pro}"
-							Style="{StaticResource ProModeButtonStyle}"
-							Click="UseProMode_Click" />
-				</StackPanel>
-
 				<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
 					<Button Content="{DynamicResource Loc.Menu.Read}"
 							Width="88"
@@ -268,32 +225,19 @@
 		</Border>
 
 		<TabControl x:Name="MainTabs" Grid.Row="2" Margin="18 18 18 18" TabStripPlacement="Top">
-			<TabItem x:Name="WelcomeTab" Header="{DynamicResource Loc.Tab.Welcome}">
-				<vw:WelcomeView />
-			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.EasySetup}"
-					 x:Name="EasySetupTab"
-					 Visibility="{Binding IsEasyMode, Converter={StaticResource BoolToVis}}">
-				<vw:EasySetupView />
-			</TabItem>
 			<TabItem x:Name="ConnectionTab" Header="{DynamicResource Loc.Tab.Connection}">
 				<vw:ConnectionView DataContext="{Binding ConnectionVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.System}"
-					 x:Name="SystemTab"
-					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+			<TabItem Header="{DynamicResource Loc.Tab.System}">
 				<vw:SystemView />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.AssistLevels}"
-					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+			<TabItem Header="{DynamicResource Loc.Tab.AssistLevels}">
 				<vw:AssistLevelsView DataContext="{Binding AssistLevelsVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.Calibration}"
-					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+			<TabItem Header="{DynamicResource Loc.Tab.Calibration}">
 				<vw:CalibrationView DataContext="{Binding CalibrationVm}" />
 			</TabItem>
-			<TabItem Header="{DynamicResource Loc.Tab.EventLog}"
-					 Visibility="{Binding IsProMode, Converter={StaticResource BoolToVis}}">
+			<TabItem Header="{DynamicResource Loc.Tab.EventLog}">
 				<vw:EventLogView DataContext="{Binding EventLogVm}" />
 			</TabItem>
 		</TabControl>
